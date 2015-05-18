@@ -52,6 +52,10 @@ If you're having any problem, please [raise an issue](https://github.com/resin-i
 ChangeLog
 ---------
 
+### v1.1.1
+
+- Upgrade Resin Settings Client to v1.0.1, which defaults remoteUrl to api.resin.io.
+
 ### v1.1.0
 
 - Make use of [resin-errors](https://github.com/resin-io/resin-errors).
