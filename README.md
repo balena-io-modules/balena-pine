@@ -4,6 +4,7 @@ resin-pine
 [![npm version](https://badge.fury.io/js/resin-pine.svg)](http://badge.fury.io/js/resin-pine)
 [![dependencies](https://david-dm.org/resin-io/resin-pine.png)](https://david-dm.org/resin-io/resin-pine.png)
 [![Build Status](https://travis-ci.org/resin-io/resin-pine.svg?branch=master)](https://travis-ci.org/resin-io/resin-pine)
+[![Build status](https://ci.appveyor.com/api/projects/status/cwh3jfc7vur5bvmu?svg=true)](https://ci.appveyor.com/project/jviotti/resin-pine)
 
 Resin.io PineJS client.
 
