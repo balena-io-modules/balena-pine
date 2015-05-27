@@ -11,6 +11,10 @@ class ResinPine extends PinejsClientCore
 		params.json = true
 		params.gzip ?= true
 
+		# Support "data" attribute
+		if params.data? and not params.body?
+			params.body = params.data
+
 		request(params).spread (response, body) ->
 			return body if utils.isSuccessfulResponse(response)
 			throw new errors.ResinRequestError(body)
