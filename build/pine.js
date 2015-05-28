@@ -26,6 +26,9 @@ ResinPine = (function(_super) {
     if (params.gzip == null) {
       params.gzip = true;
     }
+    if ((params.data != null) && (params.body == null)) {
+      params.body = params.data;
+    }
     return request(params).spread(function(response, body) {
       if (utils.isSuccessfulResponse(response)) {
         return body;
