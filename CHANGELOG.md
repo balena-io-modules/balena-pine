@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.3.0] - 2015-06-19
+
+## Added
+
+- Check the existance of a session token before triggering a request.
+
 ## [1.2.0] - 2015-06-19
 
 ## Changed
