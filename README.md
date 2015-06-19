@@ -8,7 +8,10 @@ resin-pine
 
 Resin.io PineJS client.
 
-A subclass of [pinejs-client-js](https://github.com/resin-io/pinejs-client-js) which uses [resin-request](https://github.com/resin-io/resin-request).
+Role
+----
+
+The intention of this module is to provide a ready to use subclass of [pinejs-client-js](https://github.com/resin-io/pinejs-client-js) which uses [resin-request](https://github.com/resin-io/resin-request).
 
 Installation
 ------------
@@ -23,6 +26,11 @@ Documentation
 -------------
 
 Head over to [pinejs-client-js](https://github.com/resin-io/pinejs-client-js) for documentation.
+
+Support
+-------
+
+If you're having any problem, please [raise an issue](https://github.com/resin-io/resin-pine/issues/new) on GitHub and the Resin.io team will be happy to help.
 
 Tests
 -----
@@ -44,22 +52,6 @@ Before submitting a PR, please make sure that you include tests, and that [coffe
 ```sh
 $ gulp lint
 ```
-
-Support
--------
-
-If you're having any problem, please [raise an issue](https://github.com/resin-io/resin-pine/issues/new) on GitHub.
-
-ChangeLog
----------
-
-### v1.1.1
-
-- Upgrade Resin Settings Client to v1.0.1, which defaults remoteUrl to api.resin.io.
-
-### v1.1.0
-
-- Make use of [resin-errors](https://github.com/resin-io/resin-errors).
 
 License
 -------
