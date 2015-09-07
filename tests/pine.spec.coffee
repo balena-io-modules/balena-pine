@@ -21,7 +21,7 @@ describe 'Pine:', ->
 	describe 'given a /whoami endpoint', ->
 
 		beforeEach ->
-			nock(settings.get('remoteUrl')).get('/whoami').reply(200, tokens.johndoe.token)
+			nock(settings.get('apiUrl')).get('/whoami').reply(200, tokens.johndoe.token)
 
 		afterEach ->
 			nock.cleanAll()
@@ -36,7 +36,7 @@ describe 'Pine:', ->
 				describe 'given a simple GET endpoint', ->
 
 					beforeEach ->
-						nock(settings.get('remoteUrl')).get('/foo').reply(200, hello: 'world')
+						nock(settings.get('apiUrl')).get('/foo').reply(200, hello: 'world')
 
 					afterEach ->
 						nock.cleanAll()
@@ -55,7 +55,7 @@ describe 'Pine:', ->
 				describe 'given a simple GET endpoint', ->
 
 					beforeEach ->
-						nock(settings.get('remoteUrl')).get('/foo').reply(200, hello: 'world')
+						nock(settings.get('apiUrl')).get('/foo').reply(200, hello: 'world')
 
 					afterEach ->
 						nock.cleanAll()
@@ -69,7 +69,7 @@ describe 'Pine:', ->
 				describe 'given a POST endpoint that mirrors the request body', ->
 
 					beforeEach ->
-						nock(settings.get('remoteUrl')).post('/foo').reply 200, (uri, body) ->
+						nock(settings.get('apiUrl')).post('/foo').reply 200, (uri, body) ->
 							return body
 
 					afterEach ->
@@ -94,7 +94,7 @@ describe 'Pine:', ->
 									{ id: 2, app_name: 'Foo' }
 								]
 
-							nock(settings.get('remoteUrl'))
+							nock(settings.get('apiUrl'))
 								.get('/ewa/application?$orderby=app_name%20asc')
 								.reply(200, @applications)
 
@@ -111,7 +111,7 @@ describe 'Pine:', ->
 					describe 'given an endpoint that returns an error', ->
 
 						beforeEach ->
-							nock(settings.get('remoteUrl'))
+							nock(settings.get('apiUrl'))
 								.get('/ewa/application')
 								.reply(500, 'Internal Server Error')
 
@@ -129,7 +129,7 @@ describe 'Pine:', ->
 					describe 'given a working pine endpoint that gives back the request body', ->
 
 						beforeEach ->
-							nock(settings.get('remoteUrl'))
+							nock(settings.get('apiUrl'))
 								.post('/ewa/application')
 								.reply 201, (uri, body) ->
 									return body
@@ -151,7 +151,7 @@ describe 'Pine:', ->
 					describe 'given pine endpoint that returns an error', ->
 
 						beforeEach ->
-							nock(settings.get('remoteUrl'))
+							nock(settings.get('apiUrl'))
 								.post('/ewa/application')
 								.reply(404, 'Unsupported device type')
 
