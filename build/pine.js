@@ -26,7 +26,7 @@ THE SOFTWARE.
 /**
  * @module pine
  */
-var PinejsClientCore, Promise, ResinPine, errors, request, token, _,
+var PinejsClientCore, Promise, ResinPine, errors, request, settings, _,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -38,7 +38,7 @@ PinejsClientCore = require('pinejs-client/core')(_, Promise);
 
 request = require('resin-request');
 
-token = require('resin-token');
+settings = require('resin-settings-client');
 
 errors = require('resin-errors');
 
@@ -75,8 +75,8 @@ ResinPine = (function(_super) {
     if (options.timeout == null) {
       options.timeout = 30000;
     }
-    return token.has().then(function(hasToken) {
-      if (!hasToken) {
+    return Promise["try"](function() {
+      if (process.env[settings.get('apiKeyVariable')] == null) {
         throw new errors.ResinNotLoggedIn();
       }
       return request.send(options).get('body');
