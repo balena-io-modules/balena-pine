@@ -6,6 +6,8 @@ resin-pine
 [![Build Status](https://travis-ci.org/resin-io/resin-pine.svg?branch=master)](https://travis-ci.org/resin-io/resin-pine)
 [![Build status](https://ci.appveyor.com/api/projects/status/cwh3jfc7vur5bvmu?svg=true)](https://ci.appveyor.com/project/jviotti/resin-pine)
 
+Join our online chat at [![Gitter chat](https://badges.gitter.im/resin-io/chat.png)](https://gitter.im/resin-io/chat)
+
 Resin.io PineJS client.
 
 Role
