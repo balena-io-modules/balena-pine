@@ -18,9 +18,9 @@ limitations under the License.
 /**
  * @module pine
  */
-var PinejsClientCore, Promise, ResinPine, errors, request, token, _,
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+var PinejsClientCore, Promise, ResinPine, _, errors, request, token,
+  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  hasProp = {}.hasOwnProperty;
 
 _ = require('lodash');
 
@@ -44,8 +44,8 @@ errors = require('resin-errors');
  * This subclass makes use of the [resin-request](https://github.com/resin-io/resin-request) project.
  */
 
-ResinPine = (function(_super) {
-  __extends(ResinPine, _super);
+ResinPine = (function(superClass) {
+  extend(ResinPine, superClass);
 
   function ResinPine() {
     return ResinPine.__super__.constructor.apply(this, arguments);
