@@ -22,7 +22,7 @@ _ = require('lodash')
 Promise = require('bluebird')
 PinejsClientCore = require('pinejs-client/core')(_, Promise)
 request = require('resin-request')
-settings = require('resin-settings-client')
+token = require('resin-token')
 errors = require('resin-errors')
 
 ###*
@@ -50,10 +50,8 @@ class ResinPine extends PinejsClientCore
 		# We default to a 30s timeout, rather than hanging indefinitely.
 		options.timeout ?= 30000
 
-		Promise.try ->
-			if not process.env[settings.get('apiKeyVariable')]?
-				throw new errors.ResinNotLoggedIn()
-
+		token.has().then (hasToken) ->
+			throw new errors.ResinNotLoggedIn() if not hasToken
 			return request.send(options).get('body')
 
 module.exports = new ResinPine

@@ -18,7 +18,7 @@ limitations under the License.
 /**
  * @module pine
  */
-var PinejsClientCore, Promise, ResinPine, errors, request, settings, _,
+var PinejsClientCore, Promise, ResinPine, errors, request, token, _,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -30,7 +30,7 @@ PinejsClientCore = require('pinejs-client/core')(_, Promise);
 
 request = require('resin-request');
 
-settings = require('resin-settings-client');
+token = require('resin-token');
 
 errors = require('resin-errors');
 
@@ -67,8 +67,8 @@ ResinPine = (function(_super) {
     if (options.timeout == null) {
       options.timeout = 30000;
     }
-    return Promise["try"](function() {
-      if (process.env[settings.get('apiKeyVariable')] == null) {
+    return token.has().then(function(hasToken) {
+      if (!hasToken) {
         throw new errors.ResinNotLoggedIn();
       }
       return request.send(options).get('body');
