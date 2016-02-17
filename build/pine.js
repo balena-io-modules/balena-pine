@@ -64,9 +64,6 @@ ResinPine = (function(_super) {
    */
 
   ResinPine.prototype._request = function(options) {
-    if (options.timeout == null) {
-      options.timeout = 30000;
-    }
     return token.has().then(function(hasToken) {
       if (!hasToken) {
         throw new errors.ResinNotLoggedIn();

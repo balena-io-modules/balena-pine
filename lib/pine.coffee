@@ -46,10 +46,6 @@ class ResinPine extends PinejsClientCore
 	# @todo Implement caching support.
 	###
 	_request: (options) ->
-
-		# We default to a 30s timeout, rather than hanging indefinitely.
-		options.timeout ?= 30000
-
 		token.has().then (hasToken) ->
 			throw new errors.ResinNotLoggedIn() if not hasToken
 			return request.send(options).get('body')
