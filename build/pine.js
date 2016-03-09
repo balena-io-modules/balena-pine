@@ -41,7 +41,7 @@ errors = require('resin-errors');
  * @private
  *
  * @description
- * This subclass makes use of the [resin-request](https://github.com/resin-io/resin-request) project.
+ * This subclass makes use of the [resin-request](https://github.com/resin-io-modules/resin-request) project.
  */
 
 ResinPine = (function(superClass) {
