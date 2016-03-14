@@ -65,7 +65,7 @@ ResinPine = (function(superClass) {
 
   ResinPine.prototype._request = function(options) {
     return token.has().then(function(hasToken) {
-      if (!hasToken) {
+      if (!hasToken && _.isEmpty(process.env.RESIN_API_KEY)) {
         throw new errors.ResinNotLoggedIn();
       }
       return request.send(options).get('body');
