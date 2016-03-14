@@ -38,7 +38,7 @@
     "lodash": "^4.5.0",
     "pinejs-client": "^2.1.1",
     "resin-errors": "^2.0.0",
-    "resin-request": "^4.0.3",
+    "resin-request": "^4.1.1",
     "resin-token": "^2.4.0"
   }
 }

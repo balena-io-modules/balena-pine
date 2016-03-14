@@ -36,16 +36,35 @@ describe 'Pine:', ->
 				describe 'given a simple GET endpoint', ->
 
 					beforeEach ->
-						nock(settings.get('apiUrl')).get('/foo').reply(200, hello: 'world')
+						nock(settings.get('apiUrl')).get('/foo').query(true).reply(200, hello: 'world')
 
 					afterEach ->
 						nock.cleanAll()
 
-					it 'should be rejected with an authentication error message', ->
-						promise = pine._request
-							method: 'GET'
-							url: '/foo'
-						m.chai.expect(promise).to.be.rejectedWith('You have to log in')
+					describe 'given there is no api key', ->
+
+						beforeEach ->
+							process.env.RESIN_API_KEY = ''
+
+						it 'should be rejected with an authentication error message', ->
+							promise = pine._request
+								method: 'GET'
+								url: '/foo'
+							m.chai.expect(promise).to.be.rejectedWith('You have to log in')
+
+					describe 'given there is an api key', ->
+
+						beforeEach ->
+							process.env.RESIN_API_KEY = '123456789'
+
+						afterEach ->
+							process.env.RESIN_API_KEY = ''
+
+						it 'should make the request successfully', ->
+							promise = pine._request
+								method: 'GET'
+								url: '/foo'
+							m.chai.expect(promise).to.become(hello: 'world')
 
 			describe 'given there is a token', ->
 

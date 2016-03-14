@@ -47,7 +47,8 @@ class ResinPine extends PinejsClientCore
 	###
 	_request: (options) ->
 		token.has().then (hasToken) ->
-			throw new errors.ResinNotLoggedIn() if not hasToken
+			if not hasToken and _.isEmpty(process.env.RESIN_API_KEY)
+				throw new errors.ResinNotLoggedIn()
 			return request.send(options).get('body')
 
 module.exports = new ResinPine
