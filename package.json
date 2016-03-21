@@ -30,8 +30,7 @@
     "gulp-util": "^3.0.1",
     "mocha": "^2.4.5",
     "mochainon": "^1.0.0",
-    "nock": "^7.2.1",
-    "resin-settings-client": "^3.0.0"
+    "nock": "^7.2.1"
   },
   "dependencies": {
     "bluebird": "^3.3.1",
@@ -39,6 +38,7 @@
     "pinejs-client": "^2.1.1",
     "resin-errors": "^2.0.0",
     "resin-request": "^4.1.1",
+    "resin-settings-client": "^3.0.0",
     "resin-token": "^2.4.0"
   }
 }

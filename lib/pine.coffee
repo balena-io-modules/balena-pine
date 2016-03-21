@@ -19,9 +19,11 @@ limitations under the License.
 ###
 
 _ = require('lodash')
+url = require('url')
 Promise = require('bluebird')
 PinejsClientCore = require('pinejs-client/core')(_, Promise)
 request = require('resin-request')
+settings = require('resin-settings-client')
 token = require('resin-token')
 errors = require('resin-errors')
 
@@ -52,4 +54,4 @@ class ResinPine extends PinejsClientCore
 			return request.send(options).get('body')
 
 module.exports = new ResinPine
-	apiPrefix: '/ewa/'
+	apiPrefix: url.resolve(settings.get('apiUrl'), '/ewa/')
