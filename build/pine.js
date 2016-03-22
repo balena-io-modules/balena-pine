@@ -18,17 +18,21 @@ limitations under the License.
 /**
  * @module pine
  */
-var PinejsClientCore, Promise, ResinPine, _, errors, request, token,
+var PinejsClientCore, Promise, ResinPine, _, errors, request, settings, token, url,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
 _ = require('lodash');
+
+url = require('url');
 
 Promise = require('bluebird');
 
 PinejsClientCore = require('pinejs-client/core')(_, Promise);
 
 request = require('resin-request');
+
+settings = require('resin-settings-client');
 
 token = require('resin-token');
 
@@ -77,5 +81,5 @@ ResinPine = (function(superClass) {
 })(PinejsClientCore);
 
 module.exports = new ResinPine({
-  apiPrefix: '/ewa/'
+  apiPrefix: url.resolve(settings.get('apiUrl'), '/ewa/')
 });

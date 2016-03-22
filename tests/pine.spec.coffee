@@ -12,7 +12,7 @@ describe 'Pine:', ->
 	describe '.apiPrefix', ->
 
 		it 'should equal /ewa/', ->
-			m.chai.expect(pine.apiPrefix).to.equal('/ewa/')
+			m.chai.expect(pine.apiPrefix).to.equal(url.resolve(settings.get('apiUrl'), '/ewa/'))
 
 	# The intention of this spec is to quickly double check
 	# the internal _request() method works as expected.
