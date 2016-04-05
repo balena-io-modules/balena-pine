@@ -13,7 +13,7 @@ Resin.io PineJS client.
 Role
 ----
 
-The intention of this module is to provide a ready to use subclass of [pinejs-client-js](https://github.com/resin-io-modules/pinejs-client-js) which uses [resin-request](https://github.com/resin-io-modules/resin-request).
+The intention of this module is to provide a ready to use subclass of [pinejs-client-js](https://github.com/resin-io/pinejs-client-js) which uses [resin-request](https://github.com/resin-io-modules/resin-request).
 
 **THIS MODULE IS LOW LEVEL AND IS NOT MEANT TO BE USED BY END USERS DIRECTLY**.
 
