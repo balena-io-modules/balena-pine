@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+- Use newer /v1/ API prefix
 - Update node versions to use in Travis and AppVeyor
 
 ## [3.1.1] - 2016-03-22

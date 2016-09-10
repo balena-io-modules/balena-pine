@@ -7,12 +7,14 @@ token = require('resin-token')
 tokens = require('./fixtures/tokens.json')
 pine = require('../lib/pine')
 
+{ API_VERSION } = pine
+
 describe 'Pine:', ->
 
 	describe '.apiPrefix', ->
 
-		it 'should equal /ewa/', ->
-			m.chai.expect(pine.apiPrefix).to.equal(url.resolve(settings.get('apiUrl'), '/ewa/'))
+		it "should equal /#{API_VERSION}/", ->
+			m.chai.expect(pine.apiPrefix).to.equal(url.resolve(settings.get('apiUrl'), "/#{API_VERSION}/"))
 
 	# The intention of this spec is to quickly double check
 	# the internal _request() method works as expected.
@@ -114,7 +116,7 @@ describe 'Pine:', ->
 								]
 
 							nock(settings.get('apiUrl'))
-								.get('/ewa/application?$orderby=app_name%20asc')
+								.get("/#{API_VERSION}/application?$orderby=app_name%20asc")
 								.reply(200, @applications)
 
 						afterEach ->
@@ -131,7 +133,7 @@ describe 'Pine:', ->
 
 						beforeEach ->
 							nock(settings.get('apiUrl'))
-								.get('/ewa/application')
+								.get("/#{API_VERSION}/application")
 								.reply(500, 'Internal Server Error')
 
 						afterEach ->
@@ -149,7 +151,7 @@ describe 'Pine:', ->
 
 						beforeEach ->
 							nock(settings.get('apiUrl'))
-								.post('/ewa/application')
+								.post("/#{API_VERSION}/application")
 								.reply 201, (uri, body) ->
 									return body
 
@@ -171,7 +173,7 @@ describe 'Pine:', ->
 
 						beforeEach ->
 							nock(settings.get('apiUrl'))
-								.post('/ewa/application')
+								.post("/#{API_VERSION}/application")
 								.reply(404, 'Unsupported device type')
 
 						afterEach ->

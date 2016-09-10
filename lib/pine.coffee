@@ -27,6 +27,8 @@ settings = require('resin-settings-client')
 token = require('resin-token')
 errors = require('resin-errors')
 
+API_VERSION = "v1"
+
 ###*
 # @class
 # @classdesc A PineJS Client subclass to communicate with Resin.io.
@@ -54,4 +56,6 @@ class ResinPine extends PinejsClientCore
 			return request.send(options).get('body')
 
 module.exports = new ResinPine
-	apiPrefix: url.resolve(settings.get('apiUrl'), '/ewa/')
+	apiPrefix: url.resolve(settings.get('apiUrl'), "/#{API_VERSION}/")
+
+module.exports.API_VERSION = API_VERSION

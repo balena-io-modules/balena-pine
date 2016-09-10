@@ -18,7 +18,7 @@ limitations under the License.
 /**
  * @module pine
  */
-var PinejsClientCore, Promise, ResinPine, _, errors, request, settings, token, url,
+var API_VERSION, PinejsClientCore, Promise, ResinPine, _, errors, request, settings, token, url,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
@@ -37,6 +37,8 @@ settings = require('resin-settings-client');
 token = require('resin-token');
 
 errors = require('resin-errors');
+
+API_VERSION = 1;
 
 
 /**
@@ -83,3 +85,5 @@ ResinPine = (function(superClass) {
 module.exports = new ResinPine({
   apiPrefix: url.resolve(settings.get('apiUrl'), '/ewa/')
 });
+
+module.exports.API_VERSION = API_VERSION;
