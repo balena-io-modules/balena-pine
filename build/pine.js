@@ -38,7 +38,7 @@ token = require('resin-token');
 
 errors = require('resin-errors');
 
-API_VERSION = 1;
+API_VERSION = 'v1';
 
 
 /**
@@ -83,7 +83,7 @@ ResinPine = (function(superClass) {
 })(PinejsClientCore);
 
 module.exports = new ResinPine({
-  apiPrefix: url.resolve(settings.get('apiUrl'), '/ewa/')
+  apiPrefix: url.resolve(settings.get('apiUrl'), "/" + API_VERSION + "/")
 });
 
 module.exports.API_VERSION = API_VERSION;

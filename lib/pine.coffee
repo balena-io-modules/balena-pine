@@ -27,7 +27,7 @@ settings = require('resin-settings-client')
 token = require('resin-token')
 errors = require('resin-errors')
 
-API_VERSION = "v1"
+API_VERSION = 'v1'
 
 ###*
 # @class
