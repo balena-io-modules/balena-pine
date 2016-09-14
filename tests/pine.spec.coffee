@@ -11,8 +11,8 @@ describe 'Pine:', ->
 
 	describe '.apiPrefix', ->
 
-		it 'should equal /ewa/', ->
-			m.chai.expect(pine.apiPrefix).to.equal(url.resolve(settings.get('apiUrl'), '/ewa/'))
+		it "should equal /#{pine.API_VERSION}/", ->
+			m.chai.expect(pine.apiPrefix).to.equal(pine.API_FULL_URL)
 
 	# The intention of this spec is to quickly double check
 	# the internal _request() method works as expected.
@@ -21,7 +21,7 @@ describe 'Pine:', ->
 	describe 'given a /whoami endpoint', ->
 
 		beforeEach ->
-			nock(settings.get('apiUrl')).get('/whoami').reply(200, tokens.johndoe.token)
+			nock(pine.API_URL).get('/whoami').reply(200, tokens.johndoe.token)
 
 		afterEach ->
 			nock.cleanAll()
@@ -36,7 +36,7 @@ describe 'Pine:', ->
 				describe 'given a simple GET endpoint', ->
 
 					beforeEach ->
-						nock(settings.get('apiUrl')).get('/foo').query(true).reply(200, hello: 'world')
+						nock(pine.API_URL).get('/foo').query(true).reply(200, hello: 'world')
 
 					afterEach ->
 						nock.cleanAll()
@@ -48,6 +48,7 @@ describe 'Pine:', ->
 
 						it 'should be rejected with an authentication error message', ->
 							promise = pine._request
+								baseUrl: pine.API_URL
 								method: 'GET'
 								url: '/foo'
 							m.chai.expect(promise).to.be.rejectedWith('You have to log in')
@@ -62,6 +63,7 @@ describe 'Pine:', ->
 
 						it 'should make the request successfully', ->
 							promise = pine._request
+								baseUrl: pine.API_URL
 								method: 'GET'
 								url: '/foo'
 							m.chai.expect(promise).to.become(hello: 'world')
@@ -74,13 +76,14 @@ describe 'Pine:', ->
 				describe 'given a simple GET endpoint', ->
 
 					beforeEach ->
-						nock(settings.get('apiUrl')).get('/foo').reply(200, hello: 'world')
+						nock(pine.API_URL).get('/foo').reply(200, hello: 'world')
 
 					afterEach ->
 						nock.cleanAll()
 
 					it 'should eventually become the response body', ->
 						promise = pine._request
+							baseUrl: pine.API_URL
 							method: 'GET'
 							url: '/foo'
 						m.chai.expect(promise).to.eventually.become(hello: 'world')
@@ -88,7 +91,7 @@ describe 'Pine:', ->
 				describe 'given a POST endpoint that mirrors the request body', ->
 
 					beforeEach ->
-						nock(settings.get('apiUrl')).post('/foo').reply 200, (uri, body) ->
+						nock(pine.API_URL).post('/foo').reply 200, (uri, body) ->
 							return body
 
 					afterEach ->
@@ -96,6 +99,7 @@ describe 'Pine:', ->
 
 					it 'should eventually become the body', ->
 						promise = pine._request
+							baseUrl: pine.API_URL
 							method: 'POST'
 							url: '/foo'
 							body:
@@ -113,8 +117,8 @@ describe 'Pine:', ->
 									{ id: 2, app_name: 'Foo' }
 								]
 
-							nock(settings.get('apiUrl'))
-								.get('/ewa/application?$orderby=app_name%20asc')
+							nock(pine.API_URL)
+								.get("/#{pine.API_VERSION}/application?$orderby=app_name%20asc")
 								.reply(200, @applications)
 
 						afterEach ->
@@ -130,8 +134,8 @@ describe 'Pine:', ->
 					describe 'given an endpoint that returns an error', ->
 
 						beforeEach ->
-							nock(settings.get('apiUrl'))
-								.get('/ewa/application')
+							nock(pine.API_URL)
+								.get("/#{pine.API_VERSION}/application")
 								.reply(500, 'Internal Server Error')
 
 						afterEach ->
@@ -148,8 +152,8 @@ describe 'Pine:', ->
 					describe 'given a working pine endpoint that gives back the request body', ->
 
 						beforeEach ->
-							nock(settings.get('apiUrl'))
-								.post('/ewa/application')
+							nock(pine.API_URL)
+								.post("/#{pine.API_VERSION}/application")
 								.reply 201, (uri, body) ->
 									return body
 
@@ -170,8 +174,8 @@ describe 'Pine:', ->
 					describe 'given pine endpoint that returns an error', ->
 
 						beforeEach ->
-							nock(settings.get('apiUrl'))
-								.post('/ewa/application')
+							nock(pine.API_URL)
+								.post("/#{pine.API_VERSION}/application")
 								.reply(404, 'Unsupported device type')
 
 						afterEach ->

@@ -27,6 +27,11 @@ settings = require('resin-settings-client')
 token = require('resin-token')
 errors = require('resin-errors')
 
+apiUrl = settings.get('apiUrl')
+apiVersion = 'ewa'
+apiPrefix = "/#{apiVersion}/"
+apiFullUrl = url.resolve(apiUrl, apiPrefix)
+
 ###*
 # @class
 # @classdesc A PineJS Client subclass to communicate with Resin.io.
@@ -48,10 +53,20 @@ class ResinPine extends PinejsClientCore
 	# @todo Implement caching support.
 	###
 	_request: (options) ->
+		apiKey = process.env.RESIN_API_KEY
+		_.defaults options,
+			apiKey: apiKey
+			baseUrl: apiUrl
+
 		token.has().then (hasToken) ->
-			if not hasToken and _.isEmpty(process.env.RESIN_API_KEY)
+			if not hasToken and _.isEmpty(apiKey)
 				throw new errors.ResinNotLoggedIn()
 			return request.send(options).get('body')
 
-module.exports = new ResinPine
-	apiPrefix: url.resolve(settings.get('apiUrl'), '/ewa/')
+module.exports = pineInstance = new ResinPine
+	apiPrefix: apiFullUrl
+
+_.assign pineInstance,
+	API_URL: apiUrl
+	API_VERSION: apiVersion
+	API_FULL_URL: apiFullUrl

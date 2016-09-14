@@ -18,7 +18,7 @@ limitations under the License.
 /**
  * @module pine
  */
-var PinejsClientCore, Promise, ResinPine, _, errors, request, settings, token, url,
+var PinejsClientCore, Promise, ResinPine, _, apiFullUrl, apiPrefix, apiUrl, apiVersion, errors, pineInstance, request, settings, token, url,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
@@ -37,6 +37,14 @@ settings = require('resin-settings-client');
 token = require('resin-token');
 
 errors = require('resin-errors');
+
+apiUrl = settings.get('apiUrl');
+
+apiVersion = 'ewa';
+
+apiPrefix = "/" + apiVersion + "/";
+
+apiFullUrl = url.resolve(apiUrl, apiPrefix);
 
 
 /**
@@ -68,8 +76,14 @@ ResinPine = (function(superClass) {
    */
 
   ResinPine.prototype._request = function(options) {
+    var apiKey;
+    apiKey = process.env.RESIN_API_KEY;
+    _.defaults(options, {
+      apiKey: apiKey,
+      baseUrl: apiUrl
+    });
     return token.has().then(function(hasToken) {
-      if (!hasToken && _.isEmpty(process.env.RESIN_API_KEY)) {
+      if (!hasToken && _.isEmpty(apiKey)) {
         throw new errors.ResinNotLoggedIn();
       }
       return request.send(options).get('body');
@@ -80,6 +94,12 @@ ResinPine = (function(superClass) {
 
 })(PinejsClientCore);
 
-module.exports = new ResinPine({
-  apiPrefix: url.resolve(settings.get('apiUrl'), '/ewa/')
+module.exports = pineInstance = new ResinPine({
+  apiPrefix: apiFullUrl
+});
+
+_.assign(pineInstance, {
+  API_URL: apiUrl,
+  API_VERSION: apiVersion,
+  API_FULL_URL: apiFullUrl
 });
