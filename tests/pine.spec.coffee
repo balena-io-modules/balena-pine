@@ -51,8 +51,8 @@ describe 'Pine:', ->
 
 			describe 'given there is no token', ->
 
-				beforeEach (done) ->
-					token.remove().nodeify(done)
+				beforeEach ->
+					token.remove()
 
 				describe 'given a simple GET endpoint', ->
 
@@ -87,8 +87,8 @@ describe 'Pine:', ->
 
 			describe 'given there is a token', ->
 
-				beforeEach (done) ->
-					token.set(tokens.johndoe.token).nodeify(done)
+				beforeEach ->
+					token.set(tokens.johndoe.token)
 
 				describe 'given a simple GET endpoint', ->
 
