@@ -1,18 +1,38 @@
+_ = require('lodash')
 m = require('mochainon')
 Promise = require('bluebird')
 url = require('url')
 nock = require('nock')
-settings = require('resin-settings-client')
-token = require('resin-token')
 tokens = require('./fixtures/tokens.json')
-pine = require('../lib/pine')
+getToken = require('resin-token')
+getPine = require('../lib/pine')
+
+IS_BROWSER = window?
+
+dataDirectory = null
+apiUrl = 'https://api.resin.io/'
+if not IS_BROWSER
+	settings = require('resin-settings-client')
+	apiUrl = settings.get('apiUrl')
+	dataDirectory = settings.get('dataDirectory')
+
+token = getToken({ dataDirectory })
+
+apiVersion = 'ewa'
+
+buildPineInstance = (extraOpts) ->
+	getPine _.assign {
+		apiUrl, apiVersion, dataDirectory,
+		apiKey: null
+	}, extraOpts
 
 describe 'Pine:', ->
 
 	describe '.apiPrefix', ->
 
-		it "should equal /#{pine.API_VERSION}/", ->
-			m.chai.expect(pine.apiPrefix).to.equal(pine.API_FULL_URL)
+		it "should equal /#{apiVersion}/", ->
+			pine = buildPineInstance()
+			m.chai.expect(pine.apiPrefix).to.equal(pine.API_PREFIX)
 
 	# The intention of this spec is to quickly double check
 	# the internal _request() method works as expected.
@@ -21,14 +41,15 @@ describe 'Pine:', ->
 	describe 'given a /whoami endpoint', ->
 
 		beforeEach ->
-			nock(pine.API_URL).get('/whoami').reply(200, tokens.johndoe.token)
+			@pine = buildPineInstance()
+			nock(@pine.API_URL).get('/whoami').reply(200, tokens.johndoe.token)
 
 		afterEach ->
 			nock.cleanAll()
 
 		describe '._request()', ->
 
-			describe 'given there is not a token', ->
+			describe 'given there is no token', ->
 
 				beforeEach (done) ->
 					token.remove().nodeify(done)
@@ -36,34 +57,30 @@ describe 'Pine:', ->
 				describe 'given a simple GET endpoint', ->
 
 					beforeEach ->
-						nock(pine.API_URL).get('/foo').query(true).reply(200, hello: 'world')
+						@pine = buildPineInstance()
+						nock(@pine.API_URL).get('/foo').query(true).reply(200, hello: 'world')
 
 					afterEach ->
 						nock.cleanAll()
 
 					describe 'given there is no api key', ->
-
-						beforeEach ->
-							process.env.RESIN_API_KEY = ''
+						beforeEach: ->
+							@pine = buildPineInstance(apiKey: '')
 
 						it 'should be rejected with an authentication error message', ->
-							promise = pine._request
-								baseUrl: pine.API_URL
+							promise = @pine._request
+								baseUrl: @pine.API_URL
 								method: 'GET'
 								url: '/foo'
 							m.chai.expect(promise).to.be.rejectedWith('You have to log in')
 
 					describe 'given there is an api key', ->
-
 						beforeEach ->
-							process.env.RESIN_API_KEY = '123456789'
-
-						afterEach ->
-							process.env.RESIN_API_KEY = ''
+							@pine = buildPineInstance(apiKey: '123456789')
 
 						it 'should make the request successfully', ->
-							promise = pine._request
-								baseUrl: pine.API_URL
+							promise = @pine._request
+								baseUrl: @pine.API_URL
 								method: 'GET'
 								url: '/foo'
 							m.chai.expect(promise).to.become(hello: 'world')
@@ -76,14 +93,15 @@ describe 'Pine:', ->
 				describe 'given a simple GET endpoint', ->
 
 					beforeEach ->
-						nock(pine.API_URL).get('/foo').reply(200, hello: 'world')
+						@pine = buildPineInstance()
+						nock(@pine.API_URL).get('/foo').reply(200, hello: 'world')
 
 					afterEach ->
 						nock.cleanAll()
 
 					it 'should eventually become the response body', ->
-						promise = pine._request
-							baseUrl: pine.API_URL
+						promise = @pine._request
+							baseUrl: @pine.API_URL
 							method: 'GET'
 							url: '/foo'
 						m.chai.expect(promise).to.eventually.become(hello: 'world')
@@ -91,15 +109,16 @@ describe 'Pine:', ->
 				describe 'given a POST endpoint that mirrors the request body', ->
 
 					beforeEach ->
-						nock(pine.API_URL).post('/foo').reply 200, (uri, body) ->
+						@pine = buildPineInstance()
+						nock(@pine.API_URL).post('/foo').reply 200, (uri, body) ->
 							return body
 
 					afterEach ->
 						nock.cleanAll()
 
 					it 'should eventually become the body', ->
-						promise = pine._request
-							baseUrl: pine.API_URL
+						promise = @pine._request
+							baseUrl: @pine.API_URL
 							method: 'POST'
 							url: '/foo'
 							body:
@@ -111,21 +130,23 @@ describe 'Pine:', ->
 					describe 'given a working pine endpoint', ->
 
 						beforeEach ->
+							@pine = buildPineInstance()
+
 							@applications =
 								d: [
 									{ id: 1, app_name: 'Bar' }
 									{ id: 2, app_name: 'Foo' }
 								]
 
-							nock(pine.API_URL)
-								.get("/#{pine.API_VERSION}/application?$orderby=app_name%20asc")
+							nock(@pine.API_URL)
+								.get("/#{apiVersion}/application?$orderby=app_name%20asc")
 								.reply(200, @applications)
 
 						afterEach ->
 							nock.cleanAll()
 
 						it 'should make the correct request', ->
-							promise = pine.get
+							promise = @pine.get
 								resource: 'application'
 								options:
 									orderby: 'app_name asc'
@@ -134,15 +155,16 @@ describe 'Pine:', ->
 					describe 'given an endpoint that returns an error', ->
 
 						beforeEach ->
-							nock(pine.API_URL)
-								.get("/#{pine.API_VERSION}/application")
+							@pine = buildPineInstance()
+							nock(@pine.API_URL)
+								.get("/#{apiVersion}/application")
 								.reply(500, 'Internal Server Error')
 
 						afterEach ->
 							nock.cleanAll()
 
 						it 'should reject the promise with an error message', ->
-							promise = pine.get
+							promise = @pine.get
 								resource: 'application'
 
 							m.chai.expect(promise).to.be.rejectedWith('Internal Server Error')
@@ -152,8 +174,9 @@ describe 'Pine:', ->
 					describe 'given a working pine endpoint that gives back the request body', ->
 
 						beforeEach ->
-							nock(pine.API_URL)
-								.post("/#{pine.API_VERSION}/application")
+							@pine = buildPineInstance()
+							nock(@pine.API_URL)
+								.post("/#{apiVersion}/application")
 								.reply 201, (uri, body) ->
 									return body
 
@@ -161,7 +184,7 @@ describe 'Pine:', ->
 							nock.cleanAll()
 
 						it 'should get back the body', ->
-							promise = pine.post
+							promise = @pine.post
 								resource: 'application'
 								body:
 									app_name: 'App1'
@@ -174,15 +197,16 @@ describe 'Pine:', ->
 					describe 'given pine endpoint that returns an error', ->
 
 						beforeEach ->
-							nock(pine.API_URL)
-								.post("/#{pine.API_VERSION}/application")
+							@pine = buildPineInstance()
+							nock(@pine.API_URL)
+								.post("/#{apiVersion}/application")
 								.reply(404, 'Unsupported device type')
 
 						afterEach ->
 							nock.cleanAll()
 
 						it 'should reject the promise with an error message', ->
-							promise = pine.post
+							promise = @pine.post
 								resource: 'application'
 								body:
 									app_name: 'App1'

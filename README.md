@@ -31,7 +31,26 @@ $ npm install --save resin-pine
 Documentation
 -------------
 
-Head over to [pinejs-client-js](https://github.com/resin-io-modules/pinejs-client-js) for documentation.
+Instantiate the PineJS like that:
+
+```
+getPine = require('resin-pine')
+pine = getPine({
+  apiUrl,
+  apiVersion,
+  apiKey,
+  dataDirectory
+})
+```
+
+Where:
+* `apiUrl`, string, **required**, is the Resin.io API url like `https://api.resin.io/`,
+* `apiVersion`, string, **required**, is the version of the API to talk to, like `v1`. The current stable version is `v1`,
+* `apiKey`, string, *optional*, is the API key to make the requests with,
+* `dataDirectory`, string, *required on Node.js*, is the directory where the user settings are stored, normally retrieved like `require('resin-settings-client').get('dataDirectory')`.
+
+
+Head over to [pinejs-client-js](https://github.com/resin-io-modules/pinejs-client-js) for the returned PineJS instance documentation.
 
 Support
 -------
@@ -56,7 +75,7 @@ Contribute
 Before submitting a PR, please make sure that you include tests, and that [coffeelint](http://www.coffeelint.org/) runs without any warning:
 
 ```sh
-$ gulp lint
+$ npm run lint
 ```
 
 License

@@ -22,51 +22,52 @@ _ = require('lodash')
 url = require('url')
 Promise = require('bluebird')
 PinejsClientCore = require('pinejs-client/core')(_, Promise)
-request = require('resin-request')
-settings = require('resin-settings-client')
-token = require('resin-token')
 errors = require('resin-errors')
+getRequest = require('resin-request')
+getToken = require('resin-token')
 
-apiUrl = settings.get('apiUrl')
-apiVersion = 'ewa'
-apiPrefix = "/#{apiVersion}/"
-apiFullUrl = url.resolve(apiUrl, apiPrefix)
 
-###*
-# @class
-# @classdesc A PineJS Client subclass to communicate with Resin.io.
-# @private
-#
-# @description
-# This subclass makes use of the [resin-request](https://github.com/resin-io-modules/resin-request) project.
-###
-class ResinPine extends PinejsClientCore
+getPine = ({ apiUrl, apiVersion, apiKey, dataDirectory } = {}) ->
+	token = getToken({ dataDirectory })
+	request = getRequest({ dataDirectory })
+	apiPrefix = url.resolve(apiUrl, "/#{apiVersion}/")
 
 	###*
-	# @summary Perform a network request to Resin.io.
-	# @method
+	# @class
+	# @classdesc A PineJS Client subclass to communicate with Resin.io.
 	# @private
 	#
-	# @param {Object} options - request options
-	# @returns {Promise<*>} response body
-	#
-	# @todo Implement caching support.
+	# @description
+	# This subclass makes use of the [resin-request](https://github.com/resin-io-modules/resin-request) project.
 	###
-	_request: (options) ->
-		apiKey = process.env.RESIN_API_KEY
-		_.defaults options,
-			apiKey: apiKey
-			baseUrl: apiUrl
+	class ResinPine extends PinejsClientCore
 
-		token.has().then (hasToken) ->
-			if not hasToken and _.isEmpty(apiKey)
-				throw new errors.ResinNotLoggedIn()
-			return request.send(options).get('body')
+		###*
+		# @summary Perform a network request to Resin.io.
+		# @method
+		# @private
+		#
+		# @param {Object} options - request options
+		# @returns {Promise<*>} response body
+		#
+		# @todo Implement caching support.
+		###
+		_request: (options) ->
+			_.defaults options,
+				apiKey: apiKey
+				baseUrl: apiUrl
 
-module.exports = pineInstance = new ResinPine
-	apiPrefix: apiFullUrl
+			token.has().then (hasToken) ->
+				if not hasToken and _.isEmpty(apiKey)
+					throw new errors.ResinNotLoggedIn()
+				return request.send(options).get('body')
 
-_.assign pineInstance,
-	API_URL: apiUrl
-	API_VERSION: apiVersion
-	API_FULL_URL: apiFullUrl
+	pineInstance = new ResinPine
+		apiPrefix: apiPrefix
+
+	_.assign pineInstance,
+		API_URL: apiUrl
+		API_VERSION: apiVersion
+		API_PREFIX: apiPrefix
+
+module.exports = getPine
