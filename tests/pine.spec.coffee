@@ -1,8 +1,8 @@
 _ = require('lodash')
 m = require('mochainon')
+fetchMock = require('fetch-mock')
 Promise = require('bluebird')
 url = require('url')
-nock = require('nock')
 tokens = require('./fixtures/tokens.json')
 getToken = require('resin-token')
 getPine = require('../lib/pine')
@@ -42,10 +42,10 @@ describe 'Pine:', ->
 
 		beforeEach ->
 			@pine = buildPineInstance()
-			nock(@pine.API_URL).get('/whoami').reply(200, tokens.johndoe.token)
+			fetchMock.get("#{@pine.API_URL}/whoami", tokens.johndoe.token)
 
 		afterEach ->
-			nock.cleanAll()
+			fetchMock.restore()
 
 		describe '._request()', ->
 
@@ -58,10 +58,13 @@ describe 'Pine:', ->
 
 					beforeEach ->
 						@pine = buildPineInstance()
-						nock(@pine.API_URL).get('/foo').query(true).reply(200, hello: 'world')
+						fetchMock.get "^#{@pine.API_URL}/foo",
+							body: hello: 'world'
+							headers:
+								'Content-Type': 'application/json'
 
 					afterEach ->
-						nock.cleanAll()
+						fetchMock.restore()
 
 					describe 'given there is no api key', ->
 						beforeEach: ->
@@ -94,10 +97,13 @@ describe 'Pine:', ->
 
 					beforeEach ->
 						@pine = buildPineInstance()
-						nock(@pine.API_URL).get('/foo').reply(200, hello: 'world')
+						fetchMock.get "#{@pine.API_URL}/foo",
+							body: hello: 'world'
+							headers:
+								'Content-Type': 'application/json'
 
 					afterEach ->
-						nock.cleanAll()
+						fetchMock.restore()
 
 					it 'should eventually become the response body', ->
 						promise = @pine._request
@@ -110,11 +116,14 @@ describe 'Pine:', ->
 
 					beforeEach ->
 						@pine = buildPineInstance()
-						nock(@pine.API_URL).post('/foo').reply 200, (uri, body) ->
-							return body
+						fetchMock.post "#{@pine.API_URL}/foo", (url, opts) ->
+							status: 200
+							body: opts.body
+							headers:
+								'Content-Type': 'application/json'
 
 					afterEach ->
-						nock.cleanAll()
+						fetchMock.restore()
 
 					it 'should eventually become the body', ->
 						promise = @pine._request
@@ -138,12 +147,14 @@ describe 'Pine:', ->
 									{ id: 2, app_name: 'Foo' }
 								]
 
-							nock(@pine.API_URL)
-								.get("/#{apiVersion}/application?$orderby=app_name%20asc")
-								.reply(200, @applications)
+							fetchMock.get "#{@pine.API_URL}/#{apiVersion}/application?$orderby=app_name asc",
+								status: 200
+								body: @applications
+								headers:
+									'Content-Type': 'application/json'
 
 						afterEach ->
-							nock.cleanAll()
+							fetchMock.restore()
 
 						it 'should make the correct request', ->
 							promise = @pine.get
@@ -156,12 +167,12 @@ describe 'Pine:', ->
 
 						beforeEach ->
 							@pine = buildPineInstance()
-							nock(@pine.API_URL)
-								.get("/#{apiVersion}/application")
-								.reply(500, 'Internal Server Error')
+							fetchMock.get "#{@pine.API_URL}/#{apiVersion}/application",
+								status: 500
+								body: 'Internal Server Error'
 
 						afterEach ->
-							nock.cleanAll()
+							fetchMock.restore()
 
 						it 'should reject the promise with an error message', ->
 							promise = @pine.get
@@ -175,13 +186,14 @@ describe 'Pine:', ->
 
 						beforeEach ->
 							@pine = buildPineInstance()
-							nock(@pine.API_URL)
-								.post("/#{apiVersion}/application")
-								.reply 201, (uri, body) ->
-									return body
+							fetchMock.post "#{@pine.API_URL}/#{apiVersion}/application", (url, opts) ->
+								status: 201
+								body: opts.body
+								headers:
+									'Content-Type': 'application/json'
 
 						afterEach ->
-							nock.cleanAll()
+							fetchMock.restore()
 
 						it 'should get back the body', ->
 							promise = @pine.post
@@ -198,12 +210,12 @@ describe 'Pine:', ->
 
 						beforeEach ->
 							@pine = buildPineInstance()
-							nock(@pine.API_URL)
-								.post("/#{apiVersion}/application")
-								.reply(404, 'Unsupported device type')
+							fetchMock.post "#{@pine.API_URL}/#{apiVersion}/application",
+								status: 404
+								body: 'Unsupported device type'
 
 						afterEach ->
-							nock.cleanAll()
+							fetchMock.restore()
 
 						it 'should reject the promise with an error message', ->
 							promise = @pine.post
