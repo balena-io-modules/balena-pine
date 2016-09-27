@@ -1,3 +1,7 @@
+Promise = require('bluebird')
+global.Promise = Promise
+require('isomorphic-fetch')
+
 _ = require('lodash')
 m = require('mochainon')
 fetchMock = require('fetch-mock')

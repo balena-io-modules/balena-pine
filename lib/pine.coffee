@@ -26,7 +26,6 @@ errors = require('resin-errors')
 getRequest = require('resin-request')
 getToken = require('resin-token')
 
-
 getPine = ({ apiUrl, apiVersion, apiKey, dataDirectory } = {}) ->
 	token = getToken({ dataDirectory })
 	request = getRequest({ dataDirectory })
