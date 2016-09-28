@@ -14,7 +14,7 @@ getPine = require('../lib/pine')
 IS_BROWSER = window?
 
 dataDirectory = null
-apiUrl = 'https://api.resin.io/'
+apiUrl = 'https://api.resin.io'
 if not IS_BROWSER
 	settings = require('resin-settings-client')
 	apiUrl = settings.get('apiUrl')
