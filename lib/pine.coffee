@@ -18,10 +18,19 @@ limitations under the License.
 # @module pine
 ###
 
-_ = require('lodash')
+assign = require('lodash/assign')
+defaults = require('lodash/defaults')
+isEmpty = require('lodash/isEmpty')
+utils = {
+	isString: require('lodash/isString')
+	isNumber: require('lodash/isNumber')
+	isBoolean: require('lodash/isBoolean')
+	isObject: require('lodash/isObject')
+	isArray: require('lodash/isArray')
+}
 url = require('url')
 Promise = require('bluebird')
-PinejsClientCore = require('pinejs-client/core')(_, Promise)
+PinejsClientCore = require('pinejs-client/core')(utils, Promise)
 errors = require('resin-errors')
 getRequest = require('resin-request')
 getToken = require('resin-token')
@@ -52,19 +61,19 @@ getPine = ({ apiUrl, apiVersion, apiKey, dataDirectory } = {}) ->
 		# @todo Implement caching support.
 		###
 		_request: (options) ->
-			_.defaults options,
+			defaults options,
 				apiKey: apiKey
 				baseUrl: apiUrl
 
 			token.has().then (hasToken) ->
-				if not hasToken and _.isEmpty(apiKey)
+				if not hasToken and isEmpty(apiKey)
 					throw new errors.ResinNotLoggedIn()
 				return request.send(options).get('body')
 
 	pineInstance = new ResinPine
 		apiPrefix: apiPrefix
 
-	_.assign pineInstance,
+	assign pineInstance,
 		API_URL: apiUrl
 		API_VERSION: apiVersion
 		API_PREFIX: apiPrefix

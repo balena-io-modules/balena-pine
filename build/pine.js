@@ -18,17 +18,29 @@ limitations under the License.
 /**
  * @module pine
  */
-var PinejsClientCore, Promise, _, errors, getPine, getRequest, getToken, url,
+var PinejsClientCore, Promise, assign, defaults, errors, getPine, getRequest, getToken, isEmpty, url, utils,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
-_ = require('lodash');
+assign = require('lodash/assign');
+
+defaults = require('lodash/defaults');
+
+isEmpty = require('lodash/isEmpty');
+
+utils = {
+  isString: require('lodash/isString'),
+  isNumber: require('lodash/isNumber'),
+  isBoolean: require('lodash/isBoolean'),
+  isObject: require('lodash/isObject'),
+  isArray: require('lodash/isArray')
+};
 
 url = require('url');
 
 Promise = require('bluebird');
 
-PinejsClientCore = require('pinejs-client/core')(_, Promise);
+PinejsClientCore = require('pinejs-client/core')(utils, Promise);
 
 errors = require('resin-errors');
 
@@ -75,12 +87,12 @@ getPine = function(arg) {
      */
 
     ResinPine.prototype._request = function(options) {
-      _.defaults(options, {
+      defaults(options, {
         apiKey: apiKey,
         baseUrl: apiUrl
       });
       return token.has().then(function(hasToken) {
-        if (!hasToken && _.isEmpty(apiKey)) {
+        if (!hasToken && isEmpty(apiKey)) {
           throw new errors.ResinNotLoggedIn();
         }
         return request.send(options).get('body');
@@ -93,7 +105,7 @@ getPine = function(arg) {
   pineInstance = new ResinPine({
     apiPrefix: apiPrefix
   });
-  return _.assign(pineInstance, {
+  return assign(pineInstance, {
     API_URL: apiUrl,
     API_VERSION: apiVersion,
     API_PREFIX: apiPrefix
