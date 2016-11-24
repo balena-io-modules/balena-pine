@@ -1,18 +1,42 @@
+Promise = require('bluebird')
+global.Promise = Promise
+require('isomorphic-fetch')
+
+_ = require('lodash')
 m = require('mochainon')
+fetchMock = require('fetch-mock')
 Promise = require('bluebird')
 url = require('url')
-nock = require('nock')
-settings = require('resin-settings-client')
-token = require('resin-token')
 tokens = require('./fixtures/tokens.json')
-pine = require('../lib/pine')
+getToken = require('resin-token')
+getPine = require('../lib/pine')
+
+IS_BROWSER = window?
+
+dataDirectory = null
+apiUrl = 'https://api.resin.io'
+if not IS_BROWSER
+	settings = require('resin-settings-client')
+	apiUrl = settings.get('apiUrl')
+	dataDirectory = settings.get('dataDirectory')
+
+token = getToken({ dataDirectory })
+
+apiVersion = 'v2'
+
+buildPineInstance = (extraOpts) ->
+	getPine _.assign {
+		apiUrl, apiVersion, dataDirectory,
+		apiKey: null
+	}, extraOpts
 
 describe 'Pine:', ->
 
 	describe '.apiPrefix', ->
 
-		it 'should equal /ewa/', ->
-			m.chai.expect(pine.apiPrefix).to.equal(url.resolve(settings.get('apiUrl'), '/ewa/'))
+		it "should equal /#{apiVersion}/", ->
+			pine = buildPineInstance()
+			m.chai.expect(pine.apiPrefix).to.equal(pine.API_PREFIX)
 
 	# The intention of this spec is to quickly double check
 	# the internal _request() method works as expected.
@@ -21,66 +45,73 @@ describe 'Pine:', ->
 	describe 'given a /whoami endpoint', ->
 
 		beforeEach ->
-			nock(settings.get('apiUrl')).get('/whoami').reply(200, tokens.johndoe.token)
+			@pine = buildPineInstance()
+			fetchMock.get("#{@pine.API_URL}/whoami", tokens.johndoe.token)
 
 		afterEach ->
-			nock.cleanAll()
+			fetchMock.restore()
 
 		describe '._request()', ->
 
-			describe 'given there is not a token', ->
+			describe 'given there is no token', ->
 
-				beforeEach (done) ->
-					token.remove().nodeify(done)
+				beforeEach ->
+					token.remove()
 
 				describe 'given a simple GET endpoint', ->
 
 					beforeEach ->
-						nock(settings.get('apiUrl')).get('/foo').query(true).reply(200, hello: 'world')
+						@pine = buildPineInstance()
+						fetchMock.get "^#{@pine.API_URL}/foo",
+							body: hello: 'world'
+							headers:
+								'Content-Type': 'application/json'
 
 					afterEach ->
-						nock.cleanAll()
+						fetchMock.restore()
 
 					describe 'given there is no api key', ->
-
-						beforeEach ->
-							process.env.RESIN_API_KEY = ''
+						beforeEach: ->
+							@pine = buildPineInstance(apiKey: '')
 
 						it 'should be rejected with an authentication error message', ->
-							promise = pine._request
+							promise = @pine._request
+								baseUrl: @pine.API_URL
 								method: 'GET'
 								url: '/foo'
 							m.chai.expect(promise).to.be.rejectedWith('You have to log in')
 
 					describe 'given there is an api key', ->
-
 						beforeEach ->
-							process.env.RESIN_API_KEY = '123456789'
-
-						afterEach ->
-							process.env.RESIN_API_KEY = ''
+							@pine = buildPineInstance(apiKey: '123456789')
 
 						it 'should make the request successfully', ->
-							promise = pine._request
+							promise = @pine._request
+								baseUrl: @pine.API_URL
 								method: 'GET'
 								url: '/foo'
 							m.chai.expect(promise).to.become(hello: 'world')
 
 			describe 'given there is a token', ->
 
-				beforeEach (done) ->
-					token.set(tokens.johndoe.token).nodeify(done)
+				beforeEach ->
+					token.set(tokens.johndoe.token)
 
 				describe 'given a simple GET endpoint', ->
 
 					beforeEach ->
-						nock(settings.get('apiUrl')).get('/foo').reply(200, hello: 'world')
+						@pine = buildPineInstance()
+						fetchMock.get "#{@pine.API_URL}/foo",
+							body: hello: 'world'
+							headers:
+								'Content-Type': 'application/json'
 
 					afterEach ->
-						nock.cleanAll()
+						fetchMock.restore()
 
 					it 'should eventually become the response body', ->
-						promise = pine._request
+						promise = @pine._request
+							baseUrl: @pine.API_URL
 							method: 'GET'
 							url: '/foo'
 						m.chai.expect(promise).to.eventually.become(hello: 'world')
@@ -88,14 +119,19 @@ describe 'Pine:', ->
 				describe 'given a POST endpoint that mirrors the request body', ->
 
 					beforeEach ->
-						nock(settings.get('apiUrl')).post('/foo').reply 200, (uri, body) ->
-							return body
+						@pine = buildPineInstance()
+						fetchMock.post "#{@pine.API_URL}/foo", (url, opts) ->
+							status: 200
+							body: opts.body
+							headers:
+								'Content-Type': 'application/json'
 
 					afterEach ->
-						nock.cleanAll()
+						fetchMock.restore()
 
 					it 'should eventually become the body', ->
-						promise = pine._request
+						promise = @pine._request
+							baseUrl: @pine.API_URL
 							method: 'POST'
 							url: '/foo'
 							body:
@@ -107,21 +143,25 @@ describe 'Pine:', ->
 					describe 'given a working pine endpoint', ->
 
 						beforeEach ->
+							@pine = buildPineInstance()
+
 							@applications =
 								d: [
 									{ id: 1, app_name: 'Bar' }
 									{ id: 2, app_name: 'Foo' }
 								]
 
-							nock(settings.get('apiUrl'))
-								.get('/ewa/application?$orderby=app_name%20asc')
-								.reply(200, @applications)
+							fetchMock.get "#{@pine.API_URL}/#{apiVersion}/application?$orderby=app_name asc",
+								status: 200
+								body: @applications
+								headers:
+									'Content-Type': 'application/json'
 
 						afterEach ->
-							nock.cleanAll()
+							fetchMock.restore()
 
 						it 'should make the correct request', ->
-							promise = pine.get
+							promise = @pine.get
 								resource: 'application'
 								options:
 									orderby: 'app_name asc'
@@ -130,15 +170,16 @@ describe 'Pine:', ->
 					describe 'given an endpoint that returns an error', ->
 
 						beforeEach ->
-							nock(settings.get('apiUrl'))
-								.get('/ewa/application')
-								.reply(500, 'Internal Server Error')
+							@pine = buildPineInstance()
+							fetchMock.get "#{@pine.API_URL}/#{apiVersion}/application",
+								status: 500
+								body: 'Internal Server Error'
 
 						afterEach ->
-							nock.cleanAll()
+							fetchMock.restore()
 
 						it 'should reject the promise with an error message', ->
-							promise = pine.get
+							promise = @pine.get
 								resource: 'application'
 
 							m.chai.expect(promise).to.be.rejectedWith('Internal Server Error')
@@ -148,16 +189,18 @@ describe 'Pine:', ->
 					describe 'given a working pine endpoint that gives back the request body', ->
 
 						beforeEach ->
-							nock(settings.get('apiUrl'))
-								.post('/ewa/application')
-								.reply 201, (uri, body) ->
-									return body
+							@pine = buildPineInstance()
+							fetchMock.post "#{@pine.API_URL}/#{apiVersion}/application", (url, opts) ->
+								status: 201
+								body: opts.body
+								headers:
+									'Content-Type': 'application/json'
 
 						afterEach ->
-							nock.cleanAll()
+							fetchMock.restore()
 
 						it 'should get back the body', ->
-							promise = pine.post
+							promise = @pine.post
 								resource: 'application'
 								body:
 									app_name: 'App1'
@@ -170,15 +213,16 @@ describe 'Pine:', ->
 					describe 'given pine endpoint that returns an error', ->
 
 						beforeEach ->
-							nock(settings.get('apiUrl'))
-								.post('/ewa/application')
-								.reply(404, 'Unsupported device type')
+							@pine = buildPineInstance()
+							fetchMock.post "#{@pine.API_URL}/#{apiVersion}/application",
+								status: 404
+								body: 'Unsupported device type'
 
 						afterEach ->
-							nock.cleanAll()
+							fetchMock.restore()
 
 						it 'should reject the promise with an error message', ->
-							promise = pine.post
+							promise = @pine.post
 								resource: 'application'
 								body:
 									app_name: 'App1'

@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+### Changed
+
+- **Breaking!** Switch to factory pattern in order to make it work with the new `resin-request` and `resin-token`
+
 ## [3.1.1] - 2016-03-22
 
 ### Changed
