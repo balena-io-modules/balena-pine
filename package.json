@@ -29,12 +29,12 @@
   "devDependencies": {
     "coffee-script": "~1.11.0",
     "fetch-mock": "^5.1.5",
+    "fetch-ponyfill": "^3.0.2",
     "gulp": "^3.9.1",
     "gulp-coffee": "^2.3.1",
     "gulp-coffeelint": "^0.6.0",
     "gulp-mocha": "^3.0.0",
     "gulp-util": "^3.0.1",
-    "isomorphic-fetch": "^2.2.1",
     "karma": "^1.3.0",
     "mocha": "^3.0.0",
     "mochainon": "^1.0.0",
@@ -46,7 +46,7 @@
     "lodash": "^4.5.0",
     "pinejs-client": "^2.1.1",
     "resin-errors": "^2.0.0",
-    "resin-request": "^6.0.1",
+    "resin-request": "^7.0.0",
     "resin-token": "^3.0.0"
   }
 }
