@@ -44,7 +44,7 @@
   "dependencies": {
     "bluebird": "^3.3.1",
     "lodash": "^4.5.0",
-    "pinejs-client": "^2.1.1",
+    "pinejs-client": "^3.0.0",
     "resin-errors": "^2.0.0",
     "resin-request": "^7.0.0",
     "resin-token": "^3.0.0"
