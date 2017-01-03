@@ -68,7 +68,7 @@ describe 'Pine:', ->
 
 					beforeEach ->
 						@pine = buildPineInstance()
-						fetchMock.get "^#{@pine.API_URL}/foo",
+						fetchMock.get "begin:#{@pine.API_URL}/foo",
 							body: hello: 'world'
 							headers:
 								'Content-Type': 'application/json'
