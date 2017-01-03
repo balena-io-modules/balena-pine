@@ -1,10 +1,5 @@
-Promise = require('bluebird')
-global.Promise = Promise
-require('isomorphic-fetch')
-
 _ = require('lodash')
 m = require('mochainon')
-fetchMock = require('fetch-mock')
 Promise = require('bluebird')
 url = require('url')
 tokens = require('./fixtures/tokens.json')
@@ -15,10 +10,21 @@ IS_BROWSER = window?
 
 dataDirectory = null
 apiUrl = 'https://api.resin.io'
-if not IS_BROWSER
+if IS_BROWSER
+	# The browser mock assumes global fetch prototypes exist
+	# Can improve after https://github.com/wheresrhys/fetch-mock/issues/158
+	realFetchModule = require('fetch-ponyfill')({ Promise })
+	_.assign(global, _.pick(realFetchModule, 'Headers', 'Request', 'Response'))
+else
 	settings = require('resin-settings-client')
 	apiUrl = settings.get('apiUrl')
 	dataDirectory = settings.get('dataDirectory')
+
+fetchMock = require('fetch-mock').sandbox(Promise)
+# Promise sandbox config needs a little help. See:
+# https://github.com/wheresrhys/fetch-mock/issues/159#issuecomment-268249788
+fetchMock.fetchMock.Promise = Promise
+require('resin-request/build/utils').fetch = fetchMock.fetchMock # Can become just fetchMock after issue above is fixed.
 
 token = getToken({ dataDirectory })
 
@@ -62,7 +68,7 @@ describe 'Pine:', ->
 
 					beforeEach ->
 						@pine = buildPineInstance()
-						fetchMock.get "^#{@pine.API_URL}/foo",
+						fetchMock.get "begin:#{@pine.API_URL}/foo",
 							body: hello: 'world'
 							headers:
 								'Content-Type': 'application/json'
