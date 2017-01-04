@@ -36,7 +36,9 @@ Instantiate the PineJS like that:
 ```
 var pine = require('resin-pine')({
   apiUrl: "https://api.resin.io/",
-  apiVersion: "v2"
+  apiVersion: "v2",
+  request: request, // An instantiated resin-request instance
+  token: token // An instantiated resin-token instance
 })
 ```
 

@@ -3,7 +3,6 @@ m = require('mochainon')
 Promise = require('bluebird')
 url = require('url')
 tokens = require('./fixtures/tokens.json')
-getToken = require('resin-token')
 getPine = require('../lib/pine')
 
 IS_BROWSER = window?
@@ -16,9 +15,8 @@ if IS_BROWSER
 	realFetchModule = require('fetch-ponyfill')({ Promise })
 	_.assign(global, _.pick(realFetchModule, 'Headers', 'Request', 'Response'))
 else
-	settings = require('resin-settings-client')
-	apiUrl = settings.get('apiUrl')
-	dataDirectory = settings.get('dataDirectory')
+	temp = require('temp').track()
+	dataDirectory = temp.mkdirSync()
 
 fetchMock = require('fetch-mock').sandbox(Promise)
 # Promise sandbox config needs a little help. See:
@@ -26,13 +24,14 @@ fetchMock = require('fetch-mock').sandbox(Promise)
 fetchMock.fetchMock.Promise = Promise
 require('resin-request/build/utils').fetch = fetchMock.fetchMock # Can become just fetchMock after issue above is fixed.
 
-token = getToken({ dataDirectory })
+token = require('resin-token')({ dataDirectory })
+request = require('resin-request')({ token })
 
 apiVersion = 'v2'
 
 buildPineInstance = (extraOpts) ->
 	getPine _.assign {
-		apiUrl, apiVersion, dataDirectory,
+		apiUrl, apiVersion, request, token
 		apiKey: null
 	}, extraOpts
 

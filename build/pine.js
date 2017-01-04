@@ -19,7 +19,7 @@ limitations under the License.
 /**
  * @module pine
  */
-var PinejsClientCore, Promise, assign, defaults, errors, getPine, getRequest, getToken, isEmpty, url, utils,
+var PinejsClientCore, Promise, assign, defaults, errors, getPine, isEmpty, url, utils,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
@@ -46,19 +46,9 @@ PinejsClientCore = require('pinejs-client/core')(utils, Promise);
 
 errors = require('resin-errors');
 
-getRequest = require('resin-request');
-
-getToken = require('resin-token');
-
 getPine = function(arg) {
-  var ResinPine, apiKey, apiPrefix, apiUrl, apiVersion, dataDirectory, pineInstance, ref, request, token;
-  ref = arg != null ? arg : {}, apiUrl = ref.apiUrl, apiVersion = ref.apiVersion, apiKey = ref.apiKey, dataDirectory = ref.dataDirectory;
-  token = getToken({
-    dataDirectory: dataDirectory
-  });
-  request = getRequest({
-    dataDirectory: dataDirectory
-  });
+  var ResinPine, apiKey, apiPrefix, apiUrl, apiVersion, pineInstance, ref, request, token;
+  ref = arg != null ? arg : {}, apiUrl = ref.apiUrl, apiVersion = ref.apiVersion, apiKey = ref.apiKey, request = ref.request, token = ref.token;
   apiPrefix = url.resolve(apiUrl, "/" + apiVersion + "/");
 
   /**

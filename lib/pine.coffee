@@ -33,12 +33,8 @@ url = require('url')
 Promise = require('bluebird')
 PinejsClientCore = require('pinejs-client/core')(utils, Promise)
 errors = require('resin-errors')
-getRequest = require('resin-request')
-getToken = require('resin-token')
 
-getPine = ({ apiUrl, apiVersion, apiKey, dataDirectory } = {}) ->
-	token = getToken({ dataDirectory })
-	request = getRequest({ dataDirectory })
+getPine = ({ apiUrl, apiVersion, apiKey, request, token } = {}) ->
 	apiPrefix = url.resolve(apiUrl, "/#{apiVersion}/")
 
 	###*

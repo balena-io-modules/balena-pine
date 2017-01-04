@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+- **Breaking**: Resin-Request and Resin-Token are now required to be injected, rather than being created internally.
 - Upgraded `pinejs-client` to 3.0.0, which adds support for dates.
 - Isomorphic-fetch is no longer required, as `resin-request` now uses its own `fetch` implementation
 - **Breaking**: Timeouts in requests now use the Bluebird implementation. This changes how errors are thrown slightly: a Promise.TimeoutError is now thrown instead of a raw Error, with the message "operation timed out" instead of "timeout".
