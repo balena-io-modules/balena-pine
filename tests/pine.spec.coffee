@@ -3,7 +3,6 @@ m = require('mochainon')
 Promise = require('bluebird')
 url = require('url')
 tokens = require('./fixtures/tokens.json')
-getToken = require('resin-token')
 getPine = require('../lib/pine')
 
 IS_BROWSER = window?
@@ -25,7 +24,7 @@ fetchMock = require('fetch-mock').sandbox(Promise)
 fetchMock.fetchMock.Promise = Promise
 require('resin-request/build/utils').fetch = fetchMock.fetchMock # Can become just fetchMock after issue above is fixed.
 
-token = getToken({ dataDirectory })
+token = require('resin-token')({ dataDirectory })
 request = require('resin-request')({ dataDirectory })
 
 apiVersion = 'v2'
