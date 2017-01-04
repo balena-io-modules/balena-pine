@@ -27,6 +27,7 @@ utils = {
 	isBoolean: require('lodash/isBoolean')
 	isObject: require('lodash/isObject')
 	isArray: require('lodash/isArray')
+	isDate: require('lodash/isDate')
 }
 url = require('url')
 Promise = require('bluebird')
