@@ -39,7 +39,7 @@
     "mocha": "^3.0.0",
     "mochainon": "^1.0.0",
     "resin-config-karma": "^1.0.4",
-    "resin-request": "^7.0.0",
+    "resin-request": "^8.0.0",
     "resin-token": "^3.0.0",
     "temp": "^0.8.3"
   },
@@ -50,7 +50,7 @@
     "resin-errors": "^2.0.0"
   },
   "peerDependencies": {
-    "resin-request": "^7.0.0",
+    "resin-request": "^8.0.0",
     "resin-token": "^3.0.0"
   }
 }

@@ -25,7 +25,7 @@ fetchMock.fetchMock.Promise = Promise
 require('resin-request/build/utils').fetch = fetchMock.fetchMock # Can become just fetchMock after issue above is fixed.
 
 token = require('resin-token')({ dataDirectory })
-request = require('resin-request')({ dataDirectory })
+request = require('resin-request')({ token })
 
 apiVersion = 'v2'
 
