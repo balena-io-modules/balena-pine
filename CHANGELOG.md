@@ -3,6 +3,8 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.0.0] - 2017-01-05
+
 ### Changed
 
 - **Breaking**: Resin-Request and Resin-Token are now required to be injected, rather than being created internally.
@@ -85,6 +87,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 - Make use of [resin-errors](https://github.com/resin-io/resin-errors).
 
+[5.0.0]: https://github.com/resin-io-modules/resin-pine/compare/v4.0.0...v5.0.0
 [4.0.0]: https://github.com/resin-io-modules/resin-pine/compare/v3.1.1...v4.0.0
 [3.1.1]: https://github.com/resin-io-modules/resin-pine/compare/v3.1.0...v3.1.1
 [3.1.0]: https://github.com/resin-io-modules/resin-pine/compare/v3.0.0...v3.1.0
