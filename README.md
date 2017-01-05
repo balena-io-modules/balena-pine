@@ -46,7 +46,8 @@ Where the factory method accepts the following options:
 * `apiUrl`, string, **required**, is the Resin.io API url like `https://api.resin.io/`,
 * `apiVersion`, string, **required**, is the version of the API to talk to, like `v2`. The current stable version is `v2`,
 * `apiKey`, string, *optional*, is the API key to make the requests with,
-* `dataDirectory`, string, *required in Node.js*, *ignored in the browser*, is the directory where the user settings are stored, normally retrieved like `require('resin-settings-client').get('dataDirectory')`.
+* `request`, object, an instantiated [resin-request](https://github.com/resin-io/resin-request) instance.
+* `token`, object, an instantiated [resin-token](https://github.com/resin-io/resin-token) instance.
 
 
 Head over to [pinejs-client-js](https://github.com/resin-io-modules/pinejs-client-js) for the returned PineJS instance documentation.
