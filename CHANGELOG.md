@@ -3,6 +3,8 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+- Upgrade `pinejs-client` to `3.1.0`, which adds support for empty expand options
+
 ## [5.0.1] - 2017-01-06
 
 ### Changed
