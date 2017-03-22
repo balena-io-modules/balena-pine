@@ -3,6 +3,8 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.0.2] - 2017-03-22
+
 - Upgrade `pinejs-client` to `3.1.0`, which adds support for empty expand options
 
 ## [5.0.1] - 2017-01-06
@@ -95,6 +97,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 - Make use of [resin-errors](https://github.com/resin-io/resin-errors).
 
+[5.0.2]: https://github.com/resin-io-modules/resin-pine/compare/v5.0.1...v5.0.2
 [5.0.1]: https://github.com/resin-io-modules/resin-pine/compare/v5.0.0...v5.0.1
 [5.0.0]: https://github.com/resin-io-modules/resin-pine/compare/v4.0.0...v5.0.0
 [4.0.0]: https://github.com/resin-io-modules/resin-pine/compare/v3.1.1...v4.0.0
