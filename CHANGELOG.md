@@ -3,6 +3,8 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+- Peer depend on resin-token 4.0.0
+
 ## [5.0.2] - 2017-03-22
 
 - Upgrade `pinejs-client` to `3.1.0`, which adds support for empty expand options

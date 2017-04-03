@@ -38,8 +38,8 @@
     "mochainon": "^1.0.0",
     "resin-config-karma": "^1.0.4",
     "resin-fetch-mock": "^1.0.1",
-    "resin-request": "^8.1.0",
-    "resin-token": "^3.0.0",
+    "resin-request": "^8.3.1",
+    "resin-token": "^4.0.0",
     "temp": "^0.8.3"
   },
   "dependencies": {
@@ -50,6 +50,6 @@
   },
   "peerDependencies": {
     "resin-request": "^8.0.0",
-    "resin-token": "^3.0.0"
+    "resin-token": "^4.0.0"
   }
 }
