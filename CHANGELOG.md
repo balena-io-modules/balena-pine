@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+
+- Pass tests using resin-request version 8.6.0
+
 ## [5.0.3] - 2017-04-03
 
 - Peer depend on resin-token 4.0.0

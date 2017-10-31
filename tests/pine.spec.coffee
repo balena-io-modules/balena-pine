@@ -7,7 +7,6 @@ getToken = require('resin-token')
 getRequest = require('resin-request')
 
 { fetchMock, mockedFetch } = require('resin-fetch-mock')
-getRequest._setFetch(mockedFetch)
 
 IS_BROWSER = window?
 
@@ -19,6 +18,7 @@ if not IS_BROWSER
 
 token = getToken({ dataDirectory })
 request = getRequest({ token })
+request._setFetch(mockedFetch)
 
 apiVersion = 'v2'
 
