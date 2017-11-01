@@ -1,0 +1,24 @@
+---
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:6.11.5
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - dependency-cache-{{ checksum "package.json" }}
+            # fallback to the latest cache if no match is found
+            - v1-dependencies-
+      - run:
+          name: install-npm
+          command: npm install
+      - save_cache:
+          key: v1-dependencies-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+      - run:
+          name: test
+          command: npm test
+
