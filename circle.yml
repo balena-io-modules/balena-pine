@@ -41,26 +41,6 @@ jobs:
       - run:
           name: test
           command: npm test
-  "node-9":
-    docker:
-      - image: circleci/node:9
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - dependency-cache-{{ checksum "package.json" }}
-            # fallback to the latest cache if no match is found
-            - v1-dependencies-
-      - run:
-          name: install-npm
-          command: npm install
-      - save_cache:
-          key: v1-dependencies-{{ checksum "package.json" }}
-          paths:
-            - node_modules
-      - run:
-          name: test
-          command: npm test
 
 workflows:
   version: 2
@@ -68,4 +48,3 @@ workflows:
     jobs:
       - "node-6"
       - "node-8"
-      - "node-9"
