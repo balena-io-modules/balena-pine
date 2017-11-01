@@ -34,7 +34,7 @@ Promise = require('bluebird')
 PinejsClientCore = require('pinejs-client/core')(utils, Promise)
 errors = require('resin-errors')
 
-getPine = ({ apiUrl, apiVersion, apiKey, request, token } = {}) ->
+getPine = ({ apiUrl, apiVersion, apiKey, request, auth } = {}) ->
 	apiPrefix = url.resolve(apiUrl, "/#{apiVersion}/")
 
 	###*
@@ -62,8 +62,8 @@ getPine = ({ apiUrl, apiVersion, apiKey, request, token } = {}) ->
 				apiKey: apiKey
 				baseUrl: apiUrl
 
-			token.has().then (hasToken) ->
-				if not hasToken and isEmpty(apiKey)
+			auth.hasKey().then (hasKey) ->
+				if not hasKey and isEmpty(apiKey)
 					throw new errors.ResinNotLoggedIn()
 				return request.send(options).get('body')
 

@@ -38,7 +38,7 @@ var pine = require('resin-pine')({
   apiUrl: "https://api.resin.io/",
   apiVersion: "v2",
   request: request, // An instantiated resin-request instance
-  token: token // An instantiated resin-token instance
+  auth: auth // An instantiated resin-auth instance
 })
 ```
 
@@ -47,7 +47,7 @@ Where the factory method accepts the following options:
 * `apiVersion`, string, **required**, is the version of the API to talk to, like `v2`. The current stable version is `v2`,
 * `apiKey`, string, *optional*, is the API key to make the requests with,
 * `request`, object, an instantiated [resin-request](https://github.com/resin-io/resin-request) instance.
-* `token`, object, an instantiated [resin-token](https://github.com/resin-io/resin-token) instance.
+* `auth`, object, an instantiated [resin-auth](https://github.com/resin-io-modules/resin-auth) instance.
 
 
 Head over to [pinejs-client-js](https://github.com/resin-io-modules/pinejs-client-js) for the returned PineJS instance documentation.

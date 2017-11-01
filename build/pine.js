@@ -47,8 +47,8 @@ PinejsClientCore = require('pinejs-client/core')(utils, Promise);
 errors = require('resin-errors');
 
 getPine = function(arg) {
-  var ResinPine, apiKey, apiPrefix, apiUrl, apiVersion, pineInstance, ref, request, token;
-  ref = arg != null ? arg : {}, apiUrl = ref.apiUrl, apiVersion = ref.apiVersion, apiKey = ref.apiKey, request = ref.request, token = ref.token;
+  var ResinPine, apiKey, apiPrefix, apiUrl, apiVersion, auth, pineInstance, ref, request;
+  ref = arg != null ? arg : {}, apiUrl = ref.apiUrl, apiVersion = ref.apiVersion, apiKey = ref.apiKey, request = ref.request, auth = ref.auth;
   apiPrefix = url.resolve(apiUrl, "/" + apiVersion + "/");
 
   /**
@@ -83,8 +83,8 @@ getPine = function(arg) {
         apiKey: apiKey,
         baseUrl: apiUrl
       });
-      return token.has().then(function(hasToken) {
-        if (!hasToken && isEmpty(apiKey)) {
+      return auth.hasKey().then(function(hasKey) {
+        if (!hasKey && isEmpty(apiKey)) {
           throw new errors.ResinNotLoggedIn();
         }
         return request.send(options).get('body');

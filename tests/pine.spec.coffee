@@ -3,7 +3,7 @@ m = require('mochainon')
 url = require('url')
 tokens = require('./fixtures/tokens.json')
 getPine = require('../lib/pine')
-getToken = require('resin-token')
+ResinAuth = require('resin-auth')['default']
 getRequest = require('resin-request')
 
 { fetchMock, mockedFetch } = require('resin-fetch-mock')
@@ -16,15 +16,16 @@ if not IS_BROWSER
 	temp = require('temp').track()
 	dataDirectory = temp.mkdirSync()
 
-token = getToken({ dataDirectory })
-request = getRequest({ token })
+auth = new ResinAuth({ dataDirectory })
+
+request = getRequest({ auth })
 request._setFetch(mockedFetch)
 
 apiVersion = 'v2'
 
 buildPineInstance = (extraOpts) ->
 	getPine _.assign {
-		apiUrl, apiVersion, request, token
+		apiUrl, apiVersion, request, auth
 		apiKey: null
 	}, extraOpts
 
@@ -51,10 +52,10 @@ describe 'Pine:', ->
 
 		describe '._request()', ->
 
-			describe 'given there is no token', ->
+			describe 'given there is no auth', ->
 
 				beforeEach ->
-					token.remove()
+					auth.removeKey()
 
 				describe 'given a simple GET endpoint', ->
 
@@ -90,10 +91,10 @@ describe 'Pine:', ->
 								url: '/foo'
 							m.chai.expect(promise).to.become(hello: 'world')
 
-			describe 'given there is a token', ->
+			describe 'given there is an auth', ->
 
 				beforeEach ->
-					token.set(tokens.johndoe.token)
+					auth.setKey(tokens.johndoe.token)
 
 				describe 'given a simple GET endpoint', ->
 
