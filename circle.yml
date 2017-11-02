@@ -47,8 +47,16 @@ workflows:
   version: 2
   build:
     jobs:
-      - "node-6"
-      - "node-8"
+      - "node-6":
+          # Run for all tags (required to allow the deploy to trigger on version tags)
+          filters:
+            tags:
+              only: /.*/
+      - "node-8":
+          # Run for all tags (required to allow the deploy to trigger on version tags)
+          filters:
+            tags:
+              only: /.*/
       - deploy:
           # Deploy passing builds if they're tagged with a version
           requires:
