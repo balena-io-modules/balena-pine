@@ -18,15 +18,22 @@ buildSteps: &buildSteps
   - run:
       name: test
       command: npm test
+  - persist_to_workspace:
+      # Persist all job output, so we can (potentially) use it for deploys
+      root: ../
+      paths:
+        - ./node-*
 
 jobs:
   "node-6":
     docker:
       - image: circleci/node:6
+    working_directory: ~/node-6
     steps: *buildSteps
   "node-8":
     docker:
       - image: circleci/node:8
+    working_directory: ~/node-8
     steps: *buildSteps
 
   deploy:
@@ -34,6 +41,8 @@ jobs:
     docker:
       - image: circleci/node:6
     steps:
+      - attach_workspace:
+          at: $CIRCLE_WORKING_DIRECTORY
       - run:
           name: Login to npm
           command: |
@@ -42,6 +51,8 @@ jobs:
       - deploy:
           name: Deploy to npm
           command: npm publish
+          # Output used for publish is from node 6 build
+          working_directory: $CIRCLE_WORKING_DIRECTORY/node-6
 
 workflows:
   version: 2
