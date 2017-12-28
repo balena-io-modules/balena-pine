@@ -50,7 +50,7 @@ Where the factory method accepts the following options:
 * `auth`, object, an instantiated [resin-auth](https://github.com/resin-io-modules/resin-auth) instance.
 
 
-Head over to [pinejs-client-js](https://github.com/resin-io-modules/pinejs-client-js) for the returned PineJS instance documentation.
+Head over to [pinejs-client-js](https://github.com/resin-io/pinejs-client-js) for the returned PineJS instance documentation.
 
 Support
 -------
