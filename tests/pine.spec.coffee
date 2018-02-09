@@ -163,7 +163,7 @@ describe 'Pine:', ->
 							promise = @pine.get
 								resource: 'application'
 								options:
-									orderby: 'app_name asc'
+									$orderby: 'app_name asc'
 							m.chai.expect(promise).to.eventually.become(@applications.d)
 
 					describe 'given an endpoint that returns an error', ->
