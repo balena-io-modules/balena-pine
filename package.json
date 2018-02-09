@@ -1,6 +1,6 @@
 {
   "name": "resin-pine",
-  "version": "6.0.5",
+  "version": "7.0.0",
   "description": "Resin.io PineJS client.",
   "main": "build/pine.js",
   "homepage": "https://github.com/resin-io-modules/resin-pine",
@@ -45,7 +45,7 @@
   "dependencies": {
     "bluebird": "^3.3.1",
     "lodash": "^4.5.0",
-    "pinejs-client": "^3.1.0",
+    "pinejs-client": "^4.3.0",
     "resin-errors": "^2.0.0"
   },
   "peerDependencies": {
