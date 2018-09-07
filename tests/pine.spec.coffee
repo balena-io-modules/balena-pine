@@ -6,12 +6,11 @@ getPine = require('../lib/pine')
 ResinAuth = require('resin-auth')['default']
 getRequest = require('resin-request')
 
-{ fetchMock, mockedFetch } = require('resin-fetch-mock')
+mockServer = require('mockttp').getLocal()
 
 IS_BROWSER = window?
 
 dataDirectory = null
-apiUrl = 'https://api.resin.io'
 if not IS_BROWSER
 	temp = require('temp').track()
 	dataDirectory = temp.mkdirSync()
@@ -19,11 +18,10 @@ if not IS_BROWSER
 auth = new ResinAuth({ dataDirectory })
 
 request = getRequest({ auth })
-request._setFetch(mockedFetch)
 
 apiVersion = 'v2'
 
-buildPineInstance = (extraOpts) ->
+buildPineInstance = (apiUrl, extraOpts) ->
 	getPine _.assign {
 		apiUrl, apiVersion, request, auth
 		apiKey: null
@@ -31,10 +29,16 @@ buildPineInstance = (extraOpts) ->
 
 describe 'Pine:', ->
 
+	beforeEach ->
+		mockServer.start()
+
+	afterEach ->
+		mockServer.stop()
+
 	describe '.apiPrefix', ->
 
 		it "should equal /#{apiVersion}/", ->
-			pine = buildPineInstance()
+			pine = buildPineInstance(mockServer.url)
 			m.chai.expect(pine.apiPrefix).to.equal(pine.API_PREFIX)
 
 	# The intention of this spec is to quickly double check
@@ -44,11 +48,8 @@ describe 'Pine:', ->
 	describe 'given a /whoami endpoint', ->
 
 		beforeEach ->
-			@pine = buildPineInstance()
-			fetchMock.get("#{@pine.API_URL}/whoami", tokens.johndoe.token)
-
-		afterEach ->
-			fetchMock.restore()
+			@pine = buildPineInstance(mockServer.url)
+			mockServer.get('/whoami').thenJSON(200, tokens.johndoe.token)
 
 		describe '._request()', ->
 
@@ -60,18 +61,12 @@ describe 'Pine:', ->
 				describe 'given a simple GET endpoint', ->
 
 					beforeEach ->
-						@pine = buildPineInstance()
-						fetchMock.get "begin:#{@pine.API_URL}/foo",
-							body: hello: 'world'
-							headers:
-								'Content-Type': 'application/json'
-
-					afterEach ->
-						fetchMock.restore()
+						@pine = buildPineInstance(mockServer.url)
+						mockServer.get('/foo').thenJSON(200, hello: 'world')
 
 					describe 'given there is no api key', ->
 						beforeEach: ->
-							@pine = buildPineInstance(apiKey: '')
+							@pine = buildPineInstance(mockServer.url, apiKey: '')
 
 						it 'should be rejected with an authentication error message', ->
 							promise = @pine._request
@@ -82,7 +77,7 @@ describe 'Pine:', ->
 
 					describe 'given there is an api key', ->
 						beforeEach ->
-							@pine = buildPineInstance(apiKey: '123456789')
+							@pine = buildPineInstance(mockServer.url, apiKey: '123456789')
 
 						it 'should make the request successfully', ->
 							promise = @pine._request
@@ -99,14 +94,8 @@ describe 'Pine:', ->
 				describe 'given a simple GET endpoint', ->
 
 					beforeEach ->
-						@pine = buildPineInstance()
-						fetchMock.get "#{@pine.API_URL}/foo",
-							body: hello: 'world'
-							headers:
-								'Content-Type': 'application/json'
-
-					afterEach ->
-						fetchMock.restore()
+						@pine = buildPineInstance(mockServer.url)
+						mockServer.get('/foo').thenJSON(200, hello: 'world')
 
 					it 'should eventually become the response body', ->
 						promise = @pine._request
@@ -118,15 +107,10 @@ describe 'Pine:', ->
 				describe 'given a POST endpoint that mirrors the request body', ->
 
 					beforeEach ->
-						@pine = buildPineInstance()
-						fetchMock.post "#{@pine.API_URL}/foo", (url, opts) ->
+						@pine = buildPineInstance(mockServer.url)
+						mockServer.post('/foo').thenCallback (req) ->
 							status: 200
-							body: opts.body
-							headers:
-								'Content-Type': 'application/json'
-
-					afterEach ->
-						fetchMock.restore()
+							json: req.body.json
 
 					it 'should eventually become the body', ->
 						promise = @pine._request
@@ -142,7 +126,7 @@ describe 'Pine:', ->
 					describe 'given a working pine endpoint', ->
 
 						beforeEach ->
-							@pine = buildPineInstance()
+							@pine = buildPineInstance(mockServer.url)
 
 							@applications =
 								d: [
@@ -150,14 +134,10 @@ describe 'Pine:', ->
 									{ id: 2, app_name: 'Foo' }
 								]
 
-							fetchMock.get "#{@pine.API_URL}/#{apiVersion}/application?$orderby=app_name asc",
-								status: 200
-								body: @applications
-								headers:
-									'Content-Type': 'application/json'
-
-						afterEach ->
-							fetchMock.restore()
+							mockServer
+							.get("/#{apiVersion}/application")
+							.withQuery('$orderby': 'app_name asc')
+							.thenJSON(200, @applications)
 
 						it 'should make the correct request', ->
 							promise = @pine.get
@@ -169,13 +149,10 @@ describe 'Pine:', ->
 					describe 'given an endpoint that returns an error', ->
 
 						beforeEach ->
-							@pine = buildPineInstance()
-							fetchMock.get "#{@pine.API_URL}/#{apiVersion}/application",
-								status: 500
-								body: 'Internal Server Error'
-
-						afterEach ->
-							fetchMock.restore()
+							@pine = buildPineInstance(mockServer.url)
+							mockServer
+							.get("/#{apiVersion}/application")
+							.thenReply(500, 'Internal Server Error')
 
 						it 'should reject the promise with an error message', ->
 							promise = @pine.get
@@ -188,15 +165,11 @@ describe 'Pine:', ->
 					describe 'given a working pine endpoint that gives back the request body', ->
 
 						beforeEach ->
-							@pine = buildPineInstance()
-							fetchMock.post "#{@pine.API_URL}/#{apiVersion}/application", (url, opts) ->
-								status: 201
-								body: opts.body
-								headers:
-									'Content-Type': 'application/json'
+							@pine = buildPineInstance(mockServer.url)
 
-						afterEach ->
-							fetchMock.restore()
+							mockServer.post("/#{apiVersion}/application").thenCallback (req) ->
+								status: 201
+								json: req.body.json
 
 						it 'should get back the body', ->
 							promise = @pine.post
@@ -212,13 +185,10 @@ describe 'Pine:', ->
 					describe 'given pine endpoint that returns an error', ->
 
 						beforeEach ->
-							@pine = buildPineInstance()
-							fetchMock.post "#{@pine.API_URL}/#{apiVersion}/application",
-								status: 404
-								body: 'Unsupported device type'
-
-						afterEach ->
-							fetchMock.restore()
+							@pine = buildPineInstance(mockServer.url)
+							mockServer
+							.get("/#{apiVersion}/application")
+							.thenReply(404, 'Unsupported device type')
 
 						it 'should reject the promise with an error message', ->
 							promise = @pine.post
