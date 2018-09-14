@@ -27,27 +27,27 @@
   "author": "Juan Cruz Viotti <juan@resin.io>",
   "license": "Apache-2.0",
   "devDependencies": {
-    "coffee-script": "~1.12.2",
+    "coffeescript": "~1.12.2",
     "gulp": "^3.9.1",
     "gulp-coffee": "^2.3.1",
     "gulp-coffeelint": "^0.6.0",
-    "gulp-mocha": "^3.0.0",
+    "gulp-mocha": "^6.0.0",
     "gulp-util": "^3.0.1",
-    "karma": "^1.3.0",
+    "karma": "^3.0.0",
     "karma-chrome-launcher": "^2.2.0",
-    "mocha": "^3.0.0",
-    "mochainon": "^1.0.0",
+    "mocha": "^5.2.0",
+    "mochainon": "^2.0.0",
     "mockttp": "^0.9.1",
     "resin-auth": "^2.0.0",
-    "resin-config-karma": "^1.0.4",
-    "resin-request": "^9.3.1",
+    "resin-config-karma": "^2.2.0",
+    "resin-request": "^9.3.3",
     "temp": "^0.8.3"
   },
   "dependencies": {
-    "bluebird": "^3.3.1",
-    "lodash": "^4.5.0",
+    "bluebird": "^3.5.2",
+    "lodash": "^4.17.11",
     "pinejs-client": "^4.3.0",
-    "resin-errors": "^2.0.0"
+    "resin-errors": "^2.13.0"
   },
   "peerDependencies": {
     "resin-auth": "^2.0.0",
