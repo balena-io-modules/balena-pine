@@ -19,7 +19,7 @@ limitations under the License.
 /**
  * @module pine
  */
-var PinejsClientCore, Promise, assign, defaults, errors, getPine, isEmpty, url, utils,
+var PinejsClientCore, PinejsClientCoreFactory, Promise, assign, defaults, errors, getPine, isEmpty, url,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
@@ -29,20 +29,13 @@ defaults = require('lodash/defaults');
 
 isEmpty = require('lodash/isEmpty');
 
-utils = {
-  isString: require('lodash/isString'),
-  isNumber: require('lodash/isNumber'),
-  isBoolean: require('lodash/isBoolean'),
-  isObject: require('lodash/isObject'),
-  isArray: require('lodash/isArray'),
-  isDate: require('lodash/isDate')
-};
-
 url = require('url');
 
 Promise = require('bluebird');
 
-PinejsClientCore = require('pinejs-client/core')(utils, Promise);
+PinejsClientCoreFactory = require('pinejs-client-core').PinejsClientCoreFactory;
+
+PinejsClientCore = PinejsClientCoreFactory(Promise);
 
 errors = require('resin-errors');
 

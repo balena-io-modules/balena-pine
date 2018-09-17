@@ -21,17 +21,10 @@ limitations under the License.
 assign = require('lodash/assign')
 defaults = require('lodash/defaults')
 isEmpty = require('lodash/isEmpty')
-utils = {
-	isString: require('lodash/isString')
-	isNumber: require('lodash/isNumber')
-	isBoolean: require('lodash/isBoolean')
-	isObject: require('lodash/isObject')
-	isArray: require('lodash/isArray')
-	isDate: require('lodash/isDate')
-}
 url = require('url')
 Promise = require('bluebird')
-PinejsClientCore = require('pinejs-client/core')(utils, Promise)
+{ PinejsClientCoreFactory } = require('pinejs-client-core')
+PinejsClientCore = PinejsClientCoreFactory(Promise)
 errors = require('resin-errors')
 
 getPine = ({ apiUrl, apiVersion, apiKey, request, auth } = {}) ->
