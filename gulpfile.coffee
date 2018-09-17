@@ -21,6 +21,7 @@ gulp.task 'coffee', ->
 gulp.task 'test', ->
 	gulp.src(OPTIONS.files.tests, read: false)
 		.pipe(mocha({
+			require: 'coffeescript/register',
 			reporter: 'min'
 		}))
 
