@@ -54,10 +54,15 @@ getPine = ({ apiUrl, apiVersion, apiKey, request, auth } = {}) ->
 			defaults options,
 				apiKey: apiKey
 				baseUrl: apiUrl
+				sendToken: !options.anonymous
 
-			auth.hasKey().then (hasKey) ->
-				if not hasKey and isEmpty(apiKey)
-					throw new errors.ResinNotLoggedIn()
+			Promise.try ->
+				return if options.anonymous
+
+				auth.hasKey().then (hasKey) ->
+					if not hasKey and isEmpty(apiKey)
+						throw new errors.ResinNotLoggedIn()
+			.then ->
 				return request.send(options).get('body')
 
 	pineInstance = new ResinPine

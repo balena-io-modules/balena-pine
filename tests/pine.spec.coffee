@@ -75,6 +75,14 @@ describe 'Pine:', ->
 								url: '/foo'
 							m.chai.expect(promise).to.be.rejectedWith('You have to log in')
 
+						it 'should be successful, if sent anonymously', ->
+							promise = @pine._request
+								baseUrl: @pine.API_URL
+								method: 'GET'
+								url: '/foo'
+								anonymous: true
+							m.chai.expect(promise).to.become(hello: 'world')
+
 					describe 'given there is an api key', ->
 						beforeEach ->
 							@pine = buildPineInstance(mockServer.url, apiKey: '123456789')
@@ -95,7 +103,10 @@ describe 'Pine:', ->
 
 					beforeEach ->
 						@pine = buildPineInstance(mockServer.url)
-						mockServer.get('/foo').thenJSON(200, hello: 'world')
+						mockServer.get('/foo')
+							.withHeaders({ 'Authorization': "Bearer #{tokens.johndoe.token}" })
+							.thenJSON(200, hello: 'world')
+						mockServer.get('/foo').thenReply(401, 'Unauthorized')
 
 					it 'should eventually become the response body', ->
 						promise = @pine._request
@@ -103,6 +114,14 @@ describe 'Pine:', ->
 							method: 'GET'
 							url: '/foo'
 						m.chai.expect(promise).to.eventually.become(hello: 'world')
+
+					it 'should not send the auth token, if using an anonymous flag', ->
+						promise = @pine._request
+							baseUrl: @pine.API_URL
+							method: 'GET'
+							url: '/foo'
+							anonymous: true
+						m.chai.expect(promise).to.be.rejectedWith('Request error: Unauthorized')
 
 				describe 'given a POST endpoint that mirrors the request body', ->
 
