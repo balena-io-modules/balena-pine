@@ -103,7 +103,9 @@ describe 'Pine:', ->
 
 					beforeEach ->
 						@pine = buildPineInstance(mockServer.url)
-						mockServer.get('/foo').withHeaders({ 'Authorization': "Bearer #{tokens.johndoe.token}" }).thenJSON(200, hello: 'world')
+						mockServer.get('/foo')
+							.withHeaders({ 'Authorization': "Bearer #{tokens.johndoe.token}" })
+							.thenJSON(200, hello: 'world')
 						mockServer.get('/foo').thenReply(401, 'Unauthorized')
 
 					it 'should eventually become the response body', ->
