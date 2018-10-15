@@ -74,12 +74,19 @@ getPine = function(arg) {
     ResinPine.prototype._request = function(options) {
       defaults(options, {
         apiKey: apiKey,
-        baseUrl: apiUrl
+        baseUrl: apiUrl,
+        sendToken: !options.anonymous
       });
-      return auth.hasKey().then(function(hasKey) {
-        if (!hasKey && isEmpty(apiKey)) {
-          throw new errors.ResinNotLoggedIn();
+      return Promise["try"](function() {
+        if (options.anonymous) {
+          return;
         }
+        return auth.hasKey().then(function(hasKey) {
+          if (!hasKey && isEmpty(apiKey)) {
+            throw new errors.ResinNotLoggedIn();
+          }
+        });
+      }).then(function() {
         return request.send(options).get('body');
       });
     };
