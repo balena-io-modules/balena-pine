@@ -1,4 +1,4 @@
-getKarmaConfig = require('resin-config-karma')
+getKarmaConfig = require('balena-config-karma')
 packageJSON = require('./package.json')
 
 getKarmaConfig.DEFAULT_WEBPACK_CONFIG.externals = fs: true
