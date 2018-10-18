@@ -3,8 +3,8 @@ m = require('mochainon')
 url = require('url')
 tokens = require('./fixtures/tokens.json')
 getPine = require('../lib/pine')
-ResinAuth = require('resin-auth')['default']
-getRequest = require('resin-request')
+BalenaAuth = require('balena-auth')['default']
+getRequest = require('balena-request')
 
 mockServer = require('mockttp').getLocal()
 
@@ -15,7 +15,7 @@ if not IS_BROWSER
 	temp = require('temp').track()
 	dataDirectory = temp.mkdirSync()
 
-auth = new ResinAuth({ dataDirectory })
+auth = new BalenaAuth({ dataDirectory })
 
 request = getRequest({ auth })
 
@@ -43,7 +43,7 @@ describe 'Pine:', ->
 
 	# The intention of this spec is to quickly double check
 	# the internal _request() method works as expected.
-	# The nitty grits of request are tested in resin-request.
+	# The nitty grits of request are tested in balena-request.
 
 	describe 'given a /whoami endpoint', ->
 

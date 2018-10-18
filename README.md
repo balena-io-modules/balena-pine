@@ -1,31 +1,31 @@
-resin-pine
+balena-pine
 ----------
 
-[![npm version](https://badge.fury.io/js/resin-pine.svg)](http://badge.fury.io/js/resin-pine)
-[![dependencies](https://david-dm.org/resin-io-modules/resin-pine.png)](https://david-dm.org/resin-io-modules/resin-pine.png)
-[![Circle Build Status](https://circleci.com/gh/resin-io-modules/resin-pine/tree/master.svg?style=shield)](https://circleci.com/gh/resin-io-modules/resin-pine)
-[![Appveyor Build status](https://ci.appveyor.com/api/projects/status/cwh3jfc7vur5bvmu/branch/master?svg=true)](https://ci.appveyor.com/project/resin-io/resin-pine/branch/master)
+[![npm version](https://badge.fury.io/js/balena-pine.svg)](http://badge.fury.io/js/balena-pine)
+[![dependencies](https://david-dm.org/balena-io-modules/balena-pine.png)](https://david-dm.org/balena-io-modules/balena-pine.png)
+[![Circle Build Status](https://circleci.com/gh/balena-io-modules/balena-pine/tree/master.svg?style=shield)](https://circleci.com/gh/balena-io-modules/balena-pine)
+[![Appveyor Build status](https://ci.appveyor.com/api/projects/status/cwh3jfc7vur5bvmu/branch/master?svg=true)](https://ci.appveyor.com/project/balena-io/balena-pine/branch/master)
 
-Join our online chat at [![Gitter chat](https://badges.gitter.im/resin-io/chat.png)](https://gitter.im/resin-io/chat)
+Join our online chat at [![Gitter chat](https://badges.gitter.im/balena-io/chat.png)](https://gitter.im/balena-io/chat)
 
-Resin.io PineJS client.
+Balena PineJS client.
 
 Role
 ----
 
-The intention of this module is to provide a ready to use subclass of [pinejs-client-js](https://github.com/resin-io/pinejs-client-js) which uses [resin-request](https://github.com/resin-io-modules/resin-request).
+The intention of this module is to provide a ready to use subclass of [pinejs-client-js](https://github.com/balena-io/pinejs-client-js) which uses [balena-request](https://github.com/balena-io-modules/balena-request).
 
 **THIS MODULE IS LOW LEVEL AND IS NOT MEANT TO BE USED BY END USERS DIRECTLY**.
 
-Unless you know what you're doing, use the [Resin SDK](https://github.com/resin-io/resin-sdk) instead.
+Unless you know what you're doing, use the [balena SDK](https://github.com/balena-io/balena-sdk) instead.
 
 Installation
 ------------
 
-Install `resin-pine` by running:
+Install `balena-pine` by running:
 
 ```sh
-$ npm install --save resin-pine
+$ npm install --save balena-pine
 ```
 
 Documentation
@@ -34,28 +34,28 @@ Documentation
 Instantiate the PineJS like that:
 
 ```
-var pine = require('resin-pine')({
-  apiUrl: "https://api.resin.io/",
+var pine = require('balena-pine')({
+  apiUrl: "https://api.balena-cloud.com/",
   apiVersion: "v2",
-  request: request, // An instantiated resin-request instance
-  auth: auth // An instantiated resin-auth instance
+  request: request, // An instantiated balena-request instance
+  auth: auth // An instantiated balena-auth instance
 })
 ```
 
 Where the factory method accepts the following options:
-* `apiUrl`, string, **required**, is the Resin.io API url like `https://api.resin.io/`,
+* `apiUrl`, string, **required**, is the balena API url like `https://api.balena-cloud.com/`,
 * `apiVersion`, string, **required**, is the version of the API to talk to, like `v2`. The current stable version is `v2`,
 * `apiKey`, string, *optional*, is the API key to make the requests with,
-* `request`, object, an instantiated [resin-request](https://github.com/resin-io/resin-request) instance.
-* `auth`, object, an instantiated [resin-auth](https://github.com/resin-io-modules/resin-auth) instance.
+* `request`, object, an instantiated [balena-request](https://github.com/balena-io/balena-request) instance.
+* `auth`, object, an instantiated [balena-auth](https://github.com/balena-io-modules/balena-auth) instance.
 
 
-Head over to [pinejs-client-js](https://github.com/resin-io/pinejs-client-js) for the returned PineJS instance documentation.
+Head over to [pinejs-client-js](https://github.com/balena-io/pinejs-client-js) for the returned PineJS instance documentation.
 
 Support
 -------
 
-If you're having any problem, please [raise an issue](https://github.com/resin-io-modules/resin-pine/issues/new) on GitHub and the Resin.io team will be happy to help.
+If you're having any problem, please [raise an issue](https://github.com/balena-io-modules/balena-pine/issues/new) on GitHub and the balena team will be happy to help.
 
 Tests
 -----
@@ -69,8 +69,8 @@ $ npm test
 Contribute
 ----------
 
-- Issue Tracker: [github.com/resin-io-modules/resin-pine/issues](https://github.com/resin-io-modules/resin-pine/issues)
-- Source Code: [github.com/resin-io-modules/resin-pine](https://github.com/resin-io-modules/resin-pine)
+- Issue Tracker: [github.com/balena-io-modules/balena-pine/issues](https://github.com/balena-io-modules/balena-pine/issues)
+- Source Code: [github.com/balena-io-modules/balena-pine](https://github.com/balena-io-modules/balena-pine)
 
 Before submitting a PR, please make sure that you include tests, and that [coffeelint](http://www.coffeelint.org/) runs without any warning:
 

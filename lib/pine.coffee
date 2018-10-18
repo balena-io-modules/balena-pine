@@ -1,5 +1,5 @@
 ###
-Copyright 2016 Resin.io
+Copyright 2016 Balena
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -25,23 +25,23 @@ url = require('url')
 Promise = require('bluebird')
 { PinejsClientCoreFactory } = require('pinejs-client-core')
 PinejsClientCore = PinejsClientCoreFactory(Promise)
-errors = require('resin-errors')
+errors = require('balena-errors')
 
 getPine = ({ apiUrl, apiVersion, apiKey, request, auth } = {}) ->
 	apiPrefix = url.resolve(apiUrl, "/#{apiVersion}/")
 
 	###*
 	# @class
-	# @classdesc A PineJS Client subclass to communicate with Resin.io.
+	# @classdesc A PineJS Client subclass to communicate with balena.
 	# @private
 	#
 	# @description
-	# This subclass makes use of the [resin-request](https://github.com/resin-io-modules/resin-request) project.
+	# This subclass makes use of the [balena-request](https://github.com/balena-io-modules/balena-request) project.
 	###
-	class ResinPine extends PinejsClientCore
+	class BalenaPine extends PinejsClientCore
 
 		###*
-		# @summary Perform a network request to Resin.io.
+		# @summary Perform a network request to balena.
 		# @method
 		# @private
 		#
@@ -61,11 +61,11 @@ getPine = ({ apiUrl, apiVersion, apiKey, request, auth } = {}) ->
 
 				auth.hasKey().then (hasKey) ->
 					if not hasKey and isEmpty(apiKey)
-						throw new errors.ResinNotLoggedIn()
+						throw new errors.BalenaNotLoggedIn()
 			.then ->
 				return request.send(options).get('body')
 
-	pineInstance = new ResinPine
+	pineInstance = new BalenaPine
 		apiPrefix: apiPrefix
 
 	assign pineInstance,
