@@ -1,6 +1,6 @@
 {
   "name": "balena-pine",
-  "version": "8.1.0",
+  "version": "9.0.0",
   "description": "Balena PineJS client.",
   "main": "build/pine.js",
   "homepage": "https://github.com/balena-io-modules/balena-pine",
