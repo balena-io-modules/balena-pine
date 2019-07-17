@@ -4,7 +4,7 @@ balena-pine
 [![npm version](https://badge.fury.io/js/balena-pine.svg)](http://badge.fury.io/js/balena-pine)
 [![dependencies](https://david-dm.org/balena-io-modules/balena-pine.png)](https://david-dm.org/balena-io-modules/balena-pine.png)
 [![Circle Build Status](https://circleci.com/gh/balena-io-modules/balena-pine/tree/master.svg?style=shield)](https://circleci.com/gh/balena-io-modules/balena-pine)
-[![Appveyor Build status](https://ci.appveyor.com/api/projects/status/cwh3jfc7vur5bvmu/branch/master?svg=true)](https://ci.appveyor.com/project/balena-io/balena-pine/branch/master)
+[![Appveyor Build status](https://ci.appveyor.com/api/projects/status/8k6fb53ttm73m5ah/branch/master?svg=true)](https://ci.appveyor.com/project/resin-io/balena-pine/branch/master)
 
 Join our online chat at [![Gitter chat](https://badges.gitter.im/balena-io/chat.png)](https://gitter.im/balena-io/chat)
 
