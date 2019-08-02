@@ -50,7 +50,7 @@
     "balena-errors": "^4.1.0",
     "bluebird": "^3.5.2",
     "lodash": "^4.17.11",
-    "pinejs-client-core": "^5.5.4"
+    "pinejs-client-core": "^5.6.0"
   },
   "peerDependencies": {
     "balena-auth": "^3.0.0",
