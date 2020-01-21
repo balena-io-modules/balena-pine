@@ -29,31 +29,31 @@
   "author": "Juan Cruz Viotti <juan@balena.io>",
   "license": "Apache-2.0",
   "devDependencies": {
-    "balena-auth": "^3.0.0",
-    "balena-request": "^10.0.0",
-    "coffeescript": "~1.12.2",
+    "balena-auth": "^3.0.1",
+    "balena-config-karma": "^2.3.1",
+    "balena-request": "^10.0.4",
+    "coffeescript": "^1.12.7",
     "gulp": "^3.9.1",
-    "gulp-coffee": "^2.3.1",
+    "gulp-coffee": "^2.3.5",
     "gulp-coffeelint": "^0.6.0",
     "gulp-mocha": "^6.0.0",
-    "gulp-util": "^3.0.1",
-    "karma": "^3.0.0",
+    "gulp-util": "^3.0.8",
+    "karma": "^3.1.4",
     "karma-chrome-launcher": "^2.2.0",
     "mocha": "^5.2.0",
     "mochainon": "^2.0.0",
     "mockttp": "^0.9.1",
     "require-npm4-to-publish": "^1.0.0",
-    "balena-config-karma": "^2.2.0",
-    "temp": "^0.8.3"
+    "temp": "^0.8.4"
   },
   "dependencies": {
-    "balena-errors": "^4.1.0",
-    "bluebird": "^3.5.2",
-    "lodash": "^4.17.11",
+    "balena-errors": "^4.2.1",
+    "bluebird": "^3.7.2",
+    "lodash": "^4.17.15",
     "pinejs-client-core": "^5.6.0"
   },
   "peerDependencies": {
-    "balena-auth": "^3.0.0",
-    "balena-request": "^10.0.0"
+    "balena-auth": "^3.0.1",
+    "balena-request": "^10.0.4"
   }
 }
