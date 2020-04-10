@@ -50,6 +50,20 @@ describe 'Pine:', ->
 		beforeEach ->
 			@pine = buildPineInstance(mockServer.url)
 			mockServer.get('/whoami').thenJSON(200, tokens.johndoe.token)
+			mockServer.get('/foo')
+				.withHeaders({ 'Authorization': "Bearer #{tokens.johndoe.token}" })
+				.thenJSON(200, hello: 'world')
+			mockServer.get('/foo').thenCallback (req) ->
+				if req.url.endsWith("?apikey=#{tokens.johndoe.token}")
+					return {
+						status: 200,
+						json: hello: 'world'
+					}
+
+				return {
+					status: 401
+					body: 'Unauthorized'
+				}
 
 		describe '._request()', ->
 
@@ -60,39 +74,83 @@ describe 'Pine:', ->
 
 				describe 'given a simple GET endpoint', ->
 
-					beforeEach ->
-						@pine = buildPineInstance(mockServer.url)
-						mockServer.get('/foo').thenJSON(200, hello: 'world')
+					describe 'given a public resource', ->
 
-					describe 'given there is no api key', ->
-						beforeEach: ->
-							@pine = buildPineInstance(mockServer.url, apiKey: '')
-
-						it 'should be rejected with an authentication error message', ->
-							promise = @pine._request
-								baseUrl: @pine.API_URL
-								method: 'GET'
-								url: '/foo'
-							m.chai.expect(promise).to.be.rejectedWith('You have to log in')
-
-						it 'should be successful, if sent anonymously', ->
-							promise = @pine._request
-								baseUrl: @pine.API_URL
-								method: 'GET'
-								url: '/foo'
-								anonymous: true
-							m.chai.expect(promise).to.become(hello: 'world')
-
-					describe 'given there is an api key', ->
 						beforeEach ->
-							@pine = buildPineInstance(mockServer.url, apiKey: '123456789')
+							@pine = buildPineInstance(mockServer.url)
+							mockServer.get('/public_resource').thenJSON(200, hello: 'public world')
 
-						it 'should make the request successfully', ->
-							promise = @pine._request
-								baseUrl: @pine.API_URL
-								method: 'GET'
-								url: '/foo'
-							m.chai.expect(promise).to.become(hello: 'world')
+						describe 'given there is no api key', ->
+
+							# that's wrong and we need a major to fix it
+							it 'should be rejected with an authentication error message', ->
+								promise = @pine._request
+									baseUrl: @pine.API_URL
+									method: 'GET'
+									url: '/public_resource'
+								m.chai.expect(promise).to.be.rejectedWith('You have to log in')
+
+							it 'should be successful, if sent anonymously', ->
+								promise = @pine._request
+									baseUrl: @pine.API_URL
+									method: 'GET'
+									url: '/public_resource'
+									anonymous: true
+								m.chai.expect(promise).to.become(hello: 'public world')
+
+						describe 'given there is an api key', ->
+
+							# that's wrong and we need a major to fix it
+							it 'should be rejected with an authentication error message', ->
+								promise = @pine._request
+									baseUrl: @pine.API_URL
+									method: 'GET'
+									url: '/public_resource'
+								m.chai.expect(promise).to.be.rejectedWith('You have to log in')
+
+					describe 'given a non-public resource', ->
+
+						describe 'given there is no api key', ->
+
+							beforeEach ->
+								@pine = buildPineInstance(mockServer.url, apiKey: '')
+
+							it 'should be rejected with an authentication error message', ->
+								promise = @pine._request
+									baseUrl: @pine.API_URL
+									method: 'GET'
+									url: '/foo'
+								m.chai.expect(promise).to.be.rejectedWith('You have to log in')
+
+							it 'should be rejected with an unauthorized error, if sent anonymously', ->
+								promise = @pine._request
+									baseUrl: @pine.API_URL
+									method: 'GET'
+									url: '/foo'
+									anonymous: true
+								m.chai.expect(promise).to.be.rejectedWith('Unauthorized')
+								.then (res) ->
+									m.chai.expect(res.statusCode).to.equal(401)
+
+						describe 'given there is an api key', ->
+
+							beforeEach ->
+								@pine = buildPineInstance(mockServer.url, apiKey: tokens.johndoe.token)
+
+							it 'should make the request successfully', ->
+								promise = @pine._request
+									baseUrl: @pine.API_URL
+									method: 'GET'
+									url: '/foo'
+								m.chai.expect(promise).to.become(hello: 'world')
+
+							it 'should make the request successfully, if sent anonymously', ->
+								promise = @pine._request
+									baseUrl: @pine.API_URL
+									method: 'GET'
+									url: '/foo'
+									anonymous: true
+								m.chai.expect(promise).to.become(hello: 'world')
 
 			describe 'given there is an auth', ->
 
@@ -101,27 +159,46 @@ describe 'Pine:', ->
 
 				describe 'given a simple GET endpoint', ->
 
-					beforeEach ->
-						@pine = buildPineInstance(mockServer.url)
-						mockServer.get('/foo')
-							.withHeaders({ 'Authorization': "Bearer #{tokens.johndoe.token}" })
-							.thenJSON(200, hello: 'world')
-						mockServer.get('/foo').thenReply(401, 'Unauthorized')
+					describe 'given a public resource', ->
 
-					it 'should eventually become the response body', ->
-						promise = @pine._request
-							baseUrl: @pine.API_URL
-							method: 'GET'
-							url: '/foo'
-						m.chai.expect(promise).to.eventually.become(hello: 'world')
+						beforeEach ->
+							@pine = buildPineInstance(mockServer.url)
+							mockServer.get('/public_resource').thenJSON(200, hello: 'public world')
 
-					it 'should not send the auth token, if using an anonymous flag', ->
-						promise = @pine._request
-							baseUrl: @pine.API_URL
-							method: 'GET'
-							url: '/foo'
-							anonymous: true
-						m.chai.expect(promise).to.be.rejectedWith('Request error: Unauthorized')
+						it 'should be successful', ->
+							promise = @pine._request
+								baseUrl: @pine.API_URL
+								method: 'GET'
+								url: '/public_resource'
+							m.chai.expect(promise).to.become(hello: 'public world')
+
+						it 'should be successful, if sent anonymously', ->
+							promise = @pine._request
+								baseUrl: @pine.API_URL
+								method: 'GET'
+								url: '/public_resource'
+								anonymous: true
+							m.chai.expect(promise).to.become(hello: 'public world')
+
+					describe 'given a non-public resource', ->
+
+						beforeEach ->
+							@pine = buildPineInstance(mockServer.url)
+
+						it 'should eventually become the response body', ->
+							promise = @pine._request
+								baseUrl: @pine.API_URL
+								method: 'GET'
+								url: '/foo'
+							m.chai.expect(promise).to.eventually.become(hello: 'world')
+
+						it 'should not send the auth token, if using an anonymous flag', ->
+							promise = @pine._request
+								baseUrl: @pine.API_URL
+								method: 'GET'
+								url: '/foo'
+								anonymous: true
+							m.chai.expect(promise).to.be.rejectedWith('Request error: Unauthorized')
 
 				describe 'given a POST endpoint that mirrors the request body', ->
 
