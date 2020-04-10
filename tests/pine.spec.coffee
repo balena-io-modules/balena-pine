@@ -50,6 +50,20 @@ describe 'Pine:', ->
 		beforeEach ->
 			@pine = buildPineInstance(mockServer.url)
 			mockServer.get('/whoami').thenJSON(200, tokens.johndoe.token)
+			mockServer.get('/foo')
+				.withHeaders({ 'Authorization': "Bearer #{tokens.johndoe.token}" })
+				.thenJSON(200, hello: 'world')
+			mockServer.get('/foo').thenCallback (req) ->
+				if req.url.endsWith("?apikey=#{tokens.johndoe.token}")
+					return {
+						status: 200,
+						json: hello: 'world'
+					}
+
+				return {
+					status: 401
+					body: 'Unauthorized'
+				}
 
 		describe '._request()', ->
 
@@ -95,19 +109,6 @@ describe 'Pine:', ->
 								m.chai.expect(promise).to.be.rejectedWith('You have to log in')
 
 					describe 'given a non-public resource', ->
-
-						beforeEach ->
-							mockServer.get('/foo').thenCallback (req) ->
-								if req.headers?.authorization == "Bearer #{tokens.johndoe.token}" or req.url.endsWith("?apikey=#{tokens.johndoe.token}")
-									return {
-										status: 200,
-										json: hello: 'world'
-									}
-
-								return {
-									status: 401
-									body: 'Unauthorized'
-								}
 
 						describe 'given there is no api key', ->
 
@@ -183,10 +184,6 @@ describe 'Pine:', ->
 
 						beforeEach ->
 							@pine = buildPineInstance(mockServer.url)
-							mockServer.get('/foo')
-								.withHeaders({ 'Authorization': "Bearer #{tokens.johndoe.token}" })
-								.thenJSON(200, hello: 'world')
-							mockServer.get('/foo').thenReply(401, 'Unauthorized')
 
 						it 'should eventually become the response body', ->
 							promise = @pine._request
