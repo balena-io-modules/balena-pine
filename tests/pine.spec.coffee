@@ -82,13 +82,12 @@ describe 'Pine:', ->
 
 						describe 'given there is no api key', ->
 
-							# that's wrong and we need a major to fix it
-							it 'should be rejected with an authentication error message', ->
+							it 'should be successful', ->
 								promise = @pine._request
 									baseUrl: @pine.API_URL
 									method: 'GET'
 									url: '/public_resource'
-								m.chai.expect(promise).to.be.rejectedWith('You have to log in')
+								m.chai.expect(promise).to.become(hello: 'public world')
 
 							it 'should be successful, if sent anonymously', ->
 								promise = @pine._request
@@ -100,13 +99,12 @@ describe 'Pine:', ->
 
 						describe 'given there is an api key', ->
 
-							# that's wrong and we need a major to fix it
-							it 'should be rejected with an authentication error message', ->
+							it 'should make the request successfully', ->
 								promise = @pine._request
 									baseUrl: @pine.API_URL
 									method: 'GET'
 									url: '/public_resource'
-								m.chai.expect(promise).to.be.rejectedWith('You have to log in')
+								m.chai.expect(promise).to.become(hello: 'public world')
 
 					describe 'given a non-public resource', ->
 

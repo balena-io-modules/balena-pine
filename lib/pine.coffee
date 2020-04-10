@@ -51,19 +51,31 @@ getPine = ({ apiUrl, apiVersion, apiKey, request, auth } = {}) ->
 		# @todo Implement caching support.
 		###
 		_request: (options) ->
-			defaults options,
-				apiKey: apiKey
-				baseUrl: apiUrl
-				sendToken: !options.anonymous
+			auth.hasKey().then (hasKey) ->
+				authenticated = hasKey or !isEmpty(apiKey)
 
-			Promise.try ->
-				return if options.anonymous
+				defaults options,
+					apiKey: apiKey
+					baseUrl: apiUrl
+					sendToken: authenticated && !options.anonymous
 
-				auth.hasKey().then (hasKey) ->
-					if not hasKey and isEmpty(apiKey)
-						throw new errors.BalenaNotLoggedIn()
-			.then ->
-				return request.send(options).get('body')
+				request.send(options)
+					.get('body')
+					.catch (err) ->
+						if err.statusCode != 401
+							throw err
+
+						# Always return the API error when the anonymous flag is used.
+						if options.anonymous
+							throw err
+
+						# We want to allow unauthenticated users to make requests
+						# to public resources, but still reject with a NotLoggedIn
+						# error if the response ends up being a 401.
+						if !authenticated
+							throw new errors.BalenaNotLoggedIn()
+
+						throw err
 
 	pineInstance = new BalenaPine
 		apiPrefix: apiPrefix
