@@ -23,8 +23,7 @@
     "test": "npm run build && npm run test-node && npm run test-browser",
     "test-node": "gulp test",
     "test-browser": "mockttp -c karma start",
-    "prepublish": "require-npm4-to-publish",
-    "prepublishOnly": "npm test && npm run build"
+    "prepack": "npm run build"
   },
   "author": "Juan Cruz Viotti <juan@balena.io>",
   "license": "Apache-2.0",
@@ -43,7 +42,6 @@
     "mocha": "^5.2.0",
     "mochainon": "^2.0.0",
     "mockttp": "^0.9.1",
-    "require-npm4-to-publish": "^1.0.0",
     "temp": "^0.8.4"
   },
   "dependencies": {
