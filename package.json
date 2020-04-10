@@ -20,7 +20,7 @@
   "scripts": {
     "lint": "gulp lint",
     "build": "gulp build",
-    "test": "npm run test-node && npm run test-browser",
+    "test": "npm run build && npm run test-node && npm run test-browser",
     "test-node": "gulp test",
     "test-browser": "mockttp -c karma start",
     "prepublish": "require-npm4-to-publish",
