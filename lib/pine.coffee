@@ -18,9 +18,6 @@ limitations under the License.
 # @module pine
 ###
 
-assign = require('lodash/assign')
-defaults = require('lodash/defaults')
-isEmpty = require('lodash/isEmpty')
 url = require('url')
 Promise = require('bluebird')
 { PinejsClientCoreFactory } = require('pinejs-client-core')
@@ -52,12 +49,13 @@ getPine = ({ apiUrl, apiVersion, apiKey, request, auth } = {}) ->
 		###
 		_request: (options) ->
 			auth.hasKey().then (hasKey) ->
-				authenticated = hasKey or !isEmpty(apiKey)
+				authenticated = hasKey or (apiKey? and apiKey.length > 0)
 
-				defaults options,
+				options = Object.assign({
 					apiKey: apiKey
 					baseUrl: apiUrl
 					sendToken: authenticated && !options.anonymous
+				}, options)
 
 				request.send(options)
 					.get('body')
@@ -80,7 +78,7 @@ getPine = ({ apiUrl, apiVersion, apiKey, request, auth } = {}) ->
 	pineInstance = new BalenaPine
 		apiPrefix: apiPrefix
 
-	assign pineInstance,
+	Object.assign pineInstance,
 		API_URL: apiUrl
 		API_VERSION: apiVersion
 		API_PREFIX: apiPrefix

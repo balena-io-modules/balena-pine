@@ -1,4 +1,3 @@
-_ = require('lodash')
 m = require('mochainon')
 url = require('url')
 tokens = require('./fixtures/tokens.json')
@@ -22,7 +21,7 @@ request = getRequest({ auth })
 apiVersion = 'v2'
 
 buildPineInstance = (apiUrl, extraOpts) ->
-	getPine _.assign {
+	getPine Object.assign {
 		apiUrl, apiVersion, request, auth
 		apiKey: null
 	}, extraOpts
