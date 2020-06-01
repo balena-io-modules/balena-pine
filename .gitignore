@@ -21,6 +21,9 @@ coverage
 
 # Ignore all build output
 es5
+es2015
+es2018
+index.d.ts
 
 # Dependency directory
 # Commenting this out is preferred by some people, see
