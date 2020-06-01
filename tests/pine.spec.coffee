@@ -1,5 +1,4 @@
 m = require('mochainon')
-url = require('url')
 tokens = require('./fixtures/tokens.json')
 getPine = require('../lib/pine')
 BalenaAuth = require('balena-auth')['default']

@@ -72,7 +72,6 @@ getPine = ({ apiUrl, apiVersion, apiKey, request, auth } = {}) ->
 						# error if the response ends up being a 401.
 						if !authenticated
 							throw new errors.BalenaNotLoggedIn()
-
 						throw err
 
 	pineInstance = new BalenaPine
