@@ -2,7 +2,9 @@
   "name": "balena-pine",
   "version": "11.0.2",
   "description": "Balena PineJS client.",
-  "main": "build/pine.js",
+  "main": "es5/pine.js",
+  "types": "es5/pine.d.ts",
+  "browser": "es5/pine.js",
   "homepage": "https://github.com/balena-io-modules/balena-pine",
   "repository": {
     "type": "git",
@@ -18,9 +20,11 @@
     "test": "tests"
   },
   "scripts": {
-    "lint": "balena-lint lib tests",
-    "build": "coffee --bare --output build --compile lib",
-    "test": "npm run build && npm run test-node && npm run test-browser",
+    "lint": "balena-lint --typescript lib && balena-lint tests",
+    "lint-fix": "balena-lint --typescript --fix lib",
+    "build": "tsc --target es5 --outDir es5",
+    "pretest": "npm run build",
+    "test": "npm run test-node && npm run test-browser",
     "posttest": "npm run lint",
     "test-node": "mocha --require coffeescript/register --reporter spec tests/**/*.spec.coffee",
     "test-browser": "mockttp -c karma start",
@@ -30,7 +34,7 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "@balena/lint": "^4.1.1",
-    "balena-auth": "^3.0.1",
+    "balena-auth": "^3.1.0",
     "balena-config-karma": "^2.3.1",
     "balena-request": "^10.0.4",
     "coffeescript": "^1.12.7",
@@ -39,15 +43,17 @@
     "mocha": "^5.2.0",
     "mochainon": "^2.0.0",
     "mockttp": "^0.9.1",
-    "temp": "^0.8.4"
+    "temp": "^0.8.4",
+    "typescript": "^3.9.3"
   },
   "dependencies": {
+    "@types/bluebird": "^3.5.32",
     "balena-errors": "^4.2.1",
     "bluebird": "^3.7.2",
     "pinejs-client-core": "^5.6.0"
   },
   "peerDependencies": {
-    "balena-auth": "^3.0.1",
+    "balena-auth": "^3.1.0",
     "balena-request": "^10.0.4"
   }
 }

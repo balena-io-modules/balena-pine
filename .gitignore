@@ -20,7 +20,7 @@ coverage
 .lock-wscript
 
 # Ignore all build output
-build/
+es5
 
 # Dependency directory
 # Commenting this out is preferred by some people, see
