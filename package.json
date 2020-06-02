@@ -2,9 +2,9 @@
   "name": "balena-pine",
   "version": "11.1.0",
   "description": "Balena PineJS client.",
-  "main": "es5/pine.js",
-  "types": "es5/pine.d.ts",
-  "browser": "es5/pine.js",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "browser": "es5",
   "homepage": "https://github.com/balena-io-modules/balena-pine",
   "repository": {
     "type": "git",
@@ -22,7 +22,11 @@
   "scripts": {
     "lint": "balena-lint --typescript lib && balena-lint tests",
     "lint-fix": "balena-lint --typescript --fix lib",
-    "build": "tsc --target es5 --outDir es5",
+    "build-es5": "tsc --target es5 --outDir es5",
+    "build-es2015": "tsc --target es2015 --outDir es2015",
+    "build-es2018": "tsc --target es2018 --outDir es2018",
+    "build-types": "tsc --emitDeclarationOnly --outDir .",
+    "build": "npm run build-es5 && npm run build-es2015 && npm run build-es2018 && npm run build-types",
     "pretest": "npm run build",
     "test": "npm run test-node && npm run test-browser",
     "posttest": "npm run lint",
@@ -47,10 +51,11 @@
     "typescript": "^3.9.3"
   },
   "dependencies": {
+    "@balena/es-version": "^1.0.0",
     "@types/bluebird": "^3.5.32",
     "balena-errors": "^4.2.1",
     "bluebird": "^3.7.2",
-    "pinejs-client-core": "^5.6.0"
+    "pinejs-client-core": "^5.8.0"
   },
   "peerDependencies": {
     "balena-auth": "^3.1.0",

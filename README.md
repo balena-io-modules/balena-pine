@@ -50,7 +50,22 @@ Where the factory method accepts the following options:
 * `auth`, object, an instantiated [balena-auth](https://github.com/balena-io-modules/balena-auth) instance.
 
 
-Head over to [pinejs-client-js](https://github.com/balena-io/pinejs-client-js) for the returned PineJS instance documentation.
+
+There are multiple builds you can use, to set the version globally use [@balena/es-version](https://github.com/balena-io-modules/balena-es-version), eg:
+```js
+// Must be set before the first require
+require('@balena/es-version').set('es5') // We support exact matches on es5 (default) / es2015 / es2018, see https://github.com/balena-io-modules/balena-es-version for a full list a possible versions
+require('balena-pine') // requires the version set above
+```
+or to force a specific version overriding the default (not recommended) you can use
+```js
+require('balena-pine/es5') // es5
+require('balena-pine/es2015') // es2015/es6
+require('balena-pine/es2018') // es2018
+```
+
+
+Head over to [pinejs-client-js](https://github.com/balena-io-modules/pinejs-client-js) for the returned PineJS instance documentation.
 
 Support
 -------
