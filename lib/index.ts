@@ -32,98 +32,85 @@ interface BackendParams {
 		send: (options: AnyObject) => Promise<{ body: any }>;
 	};
 	auth: import('balena-auth').default;
-}): getPine.BalenaPine {
-	const { apiUrl, apiVersion, apiKey, request, auth } = param;
-	const apiPrefix = url.resolve(apiUrl, `/${apiVersion}/`);
+}
+
+/**
+ * @class
+ * @classdesc A PineJS Client subclass to communicate with balena.
+ *
+ * @description
+ * This subclass makes use of the [balena-request](https://github.com/balena-io-modules/balena-request) project.
+ */
+export class BalenaPine extends PinejsClientCore<BalenaPine> {
+	public API_URL: string;
+	public API_VERSION: string;
+	public API_PREFIX: string;
+
+	constructor(params: Params, public backendParams: BackendParams) {
+		super({
+			...params,
+			apiPrefix: url.resolve(
+				backendParams.apiUrl,
+				`/${backendParams.apiVersion}/`,
+			),
+		});
+
+		this.backendParams = backendParams;
+		this.API_URL = backendParams.apiUrl;
+		this.API_VERSION = backendParams.apiVersion;
+		this.API_PREFIX = this.apiPrefix;
+	}
 
 	/**
-	 * @class
-	 * @classdesc A PineJS Client subclass to communicate with balena.
+	 * @summary Perform a network request to balena.
+	 * @method
 	 * @private
 	 *
-	 * @description
-	 * This subclass makes use of the [balena-request](https://github.com/balena-io-modules/balena-request) project.
+	 * @param {Object} options - request options
+	 * @returns {Promise<*>} response body
+	 *
+	 * @todo Implement caching support.
 	 */
-	class BalenaPine extends PinejsClientCore<BalenaPine> {
+	public async _request(
+		options: {
+			method: string;
+			url: string;
+			body?: AnyObject;
+		} & AnyObject,
+	) {
+		const { apiKey, apiUrl, auth, request } = this.backendParams;
 
-		/**
-		 * @summary Perform a network request to balena.
-		 * @method
-		 * @private
-		 *
-		 * @param {Object} options - request options
-		 * @returns {Promise<*>} response body
-		 *
-		 * @todo Implement caching support.
-		 */
-		public async _request(
-			options: {
-				method: string;
-				url: string;
-				body?: AnyObject;
-			} & AnyObject,
-		) {
-			const hasKey = await auth.hasKey();
-			const authenticated = hasKey || (apiKey != null && apiKey.length > 0);
+		const hasKey = await auth.hasKey();
+		const authenticated = hasKey || (apiKey != null && apiKey.length > 0);
 
-			options = Object.assign(
-				{
-					apiKey,
-					baseUrl: apiUrl,
-					sendToken: authenticated && !options.anonymous,
-				},
-				options,
-			);
+		options = {
+			apiKey,
+			baseUrl: apiUrl,
+			sendToken: authenticated && !options.anonymous,
+			...options,
+		};
 
-			try {
-				const { body } = await request.send(options);
-				return body;
-			} catch (err) {
-				if (err.statusCode !== 401) {
-					throw err;
-				}
-
-				// Always return the API error when the anonymous flag is used.
-				if (options.anonymous) {
-					throw err;
-				}
-
-				// We want to allow unauthenticated users to make requests
-				// to public resources, but still reject with a NotLoggedIn
-				// error if the response ends up being a 401.
-				if (!authenticated) {
-					throw new errors.BalenaNotLoggedIn();
-				}
-
+		try {
+			const { body } = await request.send(options);
+			return body;
+		} catch (err) {
+			if (err.statusCode !== 401) {
 				throw err;
 			}
+
+			// Always return the API error when the anonymous flag is used.
+			if (options.anonymous) {
+				throw err;
+			}
+
+			// We want to allow unauthenticated users to make requests
+			// to public resources, but still reject with a NotLoggedIn
+			// error if the response ends up being a 401.
+			if (!authenticated) {
+				throw new errors.BalenaNotLoggedIn();
+			}
+
+			throw err;
 		}
 	}
-
-	const pineInstance = new BalenaPine({
-		apiPrefix,
-	});
-
-	return Object.assign(pineInstance, {
-		API_URL: apiUrl,
-		API_VERSION: apiVersion,
-		API_PREFIX: apiPrefix,
-	});
 }
-
-// tslint:disable-next-line:no-namespace
-declare namespace getPine {
-	// We have to declare this in a namespace to avoid an error around using private types
-	// in declaration files
-	export class BalenaPine extends PinejsClientCore<BalenaPine> {
-		public _request(
-			options: {
-				method: string;
-				url: string;
-				body?: AnyObject;
-			} & AnyObject,
-		): Promise<any>;
-	}
-}
-
-export = getPine;

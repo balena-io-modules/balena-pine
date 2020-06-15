@@ -1,6 +1,6 @@
 m = require('mochainon')
 tokens = require('./fixtures/tokens.json')
-getPine = require('..')
+{ BalenaPine } = require('..')
 BalenaAuth = require('balena-auth')['default']
 getRequest = require('balena-request')
 
@@ -20,10 +20,13 @@ request = getRequest({ auth })
 apiVersion = 'v2'
 
 buildPineInstance = (apiUrl, extraOpts) ->
-	getPine Object.assign {
-		apiUrl, apiVersion, request, auth
-		apiKey: null
-	}, extraOpts
+	new BalenaPine(
+		{},
+		Object.assign({
+			apiUrl, apiVersion, request, auth
+			apiKey: null
+		}, extraOpts)
+	)
 
 describe 'Pine:', ->
 

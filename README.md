@@ -34,7 +34,8 @@ Documentation
 Instantiate the PineJS like that:
 
 ```
-var pine = require('balena-pine')({
+const { BalenaPine } = require('balena-pine')
+var pine = new BalenaPine({}, {
   apiUrl: "https://api.balena-cloud.com/",
   apiVersion: "v2",
   request: request, // An instantiated balena-request instance
