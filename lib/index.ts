@@ -56,48 +56,47 @@ interface BackendParams {
 		 *
 		 * @todo Implement caching support.
 		 */
-		public _request(
+		public async _request(
 			options: {
 				method: string;
 				url: string;
 				body?: AnyObject;
 			} & AnyObject,
 		) {
-			return auth.hasKey().then(function(hasKey) {
-				const authenticated = hasKey || (apiKey != null && apiKey.length > 0);
+			const hasKey = await auth.hasKey();
+			const authenticated = hasKey || (apiKey != null && apiKey.length > 0);
 
-				options = Object.assign(
-					{
-						apiKey,
-						baseUrl: apiUrl,
-						sendToken: authenticated && !options.anonymous,
-					},
-					options,
-				);
+			options = Object.assign(
+				{
+					apiKey,
+					baseUrl: apiUrl,
+					sendToken: authenticated && !options.anonymous,
+				},
+				options,
+			);
 
-				return request
-					.send(options)
-					.get('body')
-					.catch(function(err) {
-						if (err.statusCode !== 401) {
-							throw err;
-						}
+			try {
+				const { body } = await request.send(options);
+				return body;
+			} catch (err) {
+				if (err.statusCode !== 401) {
+					throw err;
+				}
 
-						// Always return the API error when the anonymous flag is used.
-						if (options.anonymous) {
-							throw err;
-						}
+				// Always return the API error when the anonymous flag is used.
+				if (options.anonymous) {
+					throw err;
+				}
 
-						// We want to allow unauthenticated users to make requests
-						// to public resources, but still reject with a NotLoggedIn
-						// error if the response ends up being a 401.
-						if (!authenticated) {
-							throw new errors.BalenaNotLoggedIn();
-						}
+				// We want to allow unauthenticated users to make requests
+				// to public resources, but still reject with a NotLoggedIn
+				// error if the response ends up being a 401.
+				if (!authenticated) {
+					throw new errors.BalenaNotLoggedIn();
+				}
 
-						throw err;
-					});
-			});
+				throw err;
+			}
 		}
 	}
 
