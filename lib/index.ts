@@ -44,7 +44,6 @@ interface BackendParams {
 export class BalenaPine extends PinejsClientCore<BalenaPine> {
 	public API_URL: string;
 	public API_VERSION: string;
-	public API_PREFIX: string;
 
 	constructor(params: Params, public backendParams: BackendParams) {
 		super({
@@ -58,7 +57,6 @@ export class BalenaPine extends PinejsClientCore<BalenaPine> {
 		this.backendParams = backendParams;
 		this.API_URL = backendParams.apiUrl;
 		this.API_VERSION = backendParams.apiVersion;
-		this.API_PREFIX = this.apiPrefix;
 	}
 
 	/**
