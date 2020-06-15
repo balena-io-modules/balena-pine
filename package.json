@@ -39,7 +39,7 @@
   "devDependencies": {
     "@balena/lint": "^4.1.1",
     "balena-auth": "^3.1.0",
-    "balena-config-karma": "^2.3.1",
+    "balena-config-karma": "^3.0.0",
     "balena-request": "^10.0.4",
     "coffeescript": "^1.12.7",
     "karma": "^3.1.4",
