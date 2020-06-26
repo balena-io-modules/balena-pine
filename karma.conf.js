@@ -7,7 +7,6 @@ getKarmaConfig.DEFAULT_WEBPACK_CONFIG.externals = {
 };
 
 module.exports = function(config) {
-  var karmaConfig;
-  karmaConfig = getKarmaConfig(packageJSON);
+  var karmaConfig = getKarmaConfig(packageJSON);
   return config.set(karmaConfig);
 };

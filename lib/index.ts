@@ -21,116 +21,94 @@ limitations under the License.
 import * as url from 'url';
 
 import * as errors from 'balena-errors';
-import * as Promise from 'bluebird';
-import { PinejsClientCoreFactory } from 'pinejs-client-core';
+import { AnyObject, Params, PinejsClientCore } from 'pinejs-client-core';
 
-const PinejsClientCore = PinejsClientCoreFactory(Promise);
-
-function getPine(param: {
+interface BackendParams {
 	apiUrl: string;
 	apiVersion: string;
 	apiKey?: string;
 	request: {
 		// TODO: Should be the type of balena-request
-		send: (
-			options: PinejsClientCoreFactory.AnyObject,
-		) => Promise<{ body: any }>;
+		send: (options: AnyObject) => Promise<{ body: any }>;
 	};
 	auth: import('balena-auth').default;
-}): getPine.BalenaPine {
-	const { apiUrl, apiVersion, apiKey, request, auth } = param;
-	const apiPrefix = url.resolve(apiUrl, `/${apiVersion}/`);
+}
+
+/**
+ * @class
+ * @classdesc A PineJS Client subclass to communicate with balena.
+ *
+ * @description
+ * This subclass makes use of the [balena-request](https://github.com/balena-io-modules/balena-request) project.
+ */
+export class BalenaPine extends PinejsClientCore<BalenaPine> {
+	public API_URL: string;
+	public API_VERSION: string;
+
+	constructor(params: Params, public backendParams: BackendParams) {
+		super({
+			...params,
+			apiPrefix: url.resolve(
+				backendParams.apiUrl,
+				`/${backendParams.apiVersion}/`,
+			),
+		});
+
+		this.backendParams = backendParams;
+		this.API_URL = backendParams.apiUrl;
+		this.API_VERSION = backendParams.apiVersion;
+	}
 
 	/**
-	 * @class
-	 * @classdesc A PineJS Client subclass to communicate with balena.
+	 * @summary Perform a network request to balena.
+	 * @method
 	 * @private
 	 *
-	 * @description
-	 * This subclass makes use of the [balena-request](https://github.com/balena-io-modules/balena-request) project.
+	 * @param {Object} options - request options
+	 * @returns {Promise<*>} response body
+	 *
+	 * @todo Implement caching support.
 	 */
-	class BalenaPine extends PinejsClientCore<BalenaPine> {
-		/**
-		 * @summary Perform a network request to balena.
-		 * @method
-		 * @private
-		 *
-		 * @param {Object} options - request options
-		 * @returns {Promise<*>} response body
-		 *
-		 * @todo Implement caching support.
-		 */
-		public _request(
-			options: {
-				method: string;
-				url: string;
-				body?: PinejsClientCoreFactory.AnyObject;
-			} & PinejsClientCoreFactory.AnyObject,
-		) {
-			return auth.hasKey().then(function(hasKey) {
-				const authenticated = hasKey || (apiKey != null && apiKey.length > 0);
+	public async _request(
+		options: {
+			method: string;
+			url: string;
+			body?: AnyObject;
+		} & AnyObject,
+	) {
+		const { apiKey, apiUrl, auth, request } = this.backendParams;
 
-				options = Object.assign(
-					{
-						apiKey,
-						baseUrl: apiUrl,
-						sendToken: authenticated && !options.anonymous,
-					},
-					options,
-				);
+		const hasKey = await auth.hasKey();
+		const authenticated = hasKey || (apiKey != null && apiKey.length > 0);
 
-				return request
-					.send(options)
-					.get('body')
-					.catch(function(err) {
-						if (err.statusCode !== 401) {
-							throw err;
-						}
+		options = {
+			apiKey,
+			baseUrl: apiUrl,
+			sendToken: authenticated && !options.anonymous,
+			...options,
+		};
 
-						// Always return the API error when the anonymous flag is used.
-						if (options.anonymous) {
-							throw err;
-						}
+		try {
+			const { body } = await request.send(options);
+			return body;
+		} catch (err) {
+			if (err.statusCode !== 401) {
+				throw err;
+			}
 
-						// We want to allow unauthenticated users to make requests
-						// to public resources, but still reject with a NotLoggedIn
-						// error if the response ends up being a 401.
-						if (!authenticated) {
-							throw new errors.BalenaNotLoggedIn();
-						}
+			// Always return the API error when the anonymous flag is used.
+			if (options.anonymous) {
+				throw err;
+			}
 
-						throw err;
-					});
-			});
+			// We want to allow unauthenticated users to make requests
+			// to public resources, but still reject with a NotLoggedIn
+			// error if the response ends up being a 401.
+			if (!authenticated) {
+				throw new errors.BalenaNotLoggedIn();
+			}
+
+			throw err;
 		}
 	}
-
-	const pineInstance = new BalenaPine({
-		apiPrefix,
-	});
-
-	return Object.assign(pineInstance, {
-		API_URL: apiUrl,
-		API_VERSION: apiVersion,
-		API_PREFIX: apiPrefix,
-	});
 }
-
-// tslint:disable-next-line:no-namespace
-declare namespace getPine {
-	// We have to declare this in a namespace to avoid an error around using private types
-	// in declaration files
-	export class BalenaPine extends PinejsClientCoreFactory.PinejsClientCore<
-		BalenaPine
-	> {
-		public _request(
-			options: {
-				method: string;
-				url: string;
-				body?: PinejsClientCoreFactory.AnyObject;
-			} & PinejsClientCoreFactory.AnyObject,
-		): Promise<any>;
-	}
-}
-
-export = getPine;

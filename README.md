@@ -34,7 +34,8 @@ Documentation
 Instantiate the PineJS like that:
 
 ```
-var pine = require('balena-pine')({
+const { BalenaPine } = require('balena-pine')
+var pine = new BalenaPine({}, {
   apiUrl: "https://api.balena-cloud.com/",
   apiVersion: "v2",
   request: request, // An instantiated balena-request instance
@@ -42,7 +43,7 @@ var pine = require('balena-pine')({
 })
 ```
 
-Where the factory method accepts the following options:
+Where the second argument of the constructor accepts the following options:
 * `apiUrl`, string, **required**, is the balena API url like `https://api.balena-cloud.com/`,
 * `apiVersion`, string, **required**, is the version of the API to talk to, like `v2`. The current stable version is `v2`,
 * `apiKey`, string, *optional*, is the API key to make the requests with,
@@ -54,12 +55,11 @@ Where the factory method accepts the following options:
 There are multiple builds you can use, to set the version globally use [@balena/es-version](https://github.com/balena-io-modules/balena-es-version), eg:
 ```js
 // Must be set before the first require
-require('@balena/es-version').set('es5') // We support exact matches on es5 (default) / es2015 / es2018, see https://github.com/balena-io-modules/balena-es-version for a full list a possible versions
+require('@balena/es-version').set('es2015') // We support exact matches on es2015 (default) / es2018, see https://github.com/balena-io-modules/balena-es-version for a full list a possible versions
 require('balena-pine') // requires the version set above
 ```
 or to force a specific version overriding the default (not recommended) you can use
 ```js
-require('balena-pine/es5') // es5
 require('balena-pine/es2015') // es2015/es6
 require('balena-pine/es2018') // es2018
 ```

@@ -20,7 +20,6 @@ coverage
 .lock-wscript
 
 # Ignore all build output
-es5
 es2015
 es2018
 index.d.ts
