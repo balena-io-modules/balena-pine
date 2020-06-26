@@ -21,20 +21,15 @@ limitations under the License.
 import * as url from 'url';
 
 import * as errors from 'balena-errors';
-import * as Promise from 'bluebird';
-import { PinejsClientCoreFactory } from 'pinejs-client-core';
+import { AnyObject, Params, PinejsClientCore } from 'pinejs-client-core';
 
-const PinejsClientCore = PinejsClientCoreFactory(Promise);
-
-function getPine(param: {
+interface BackendParams {
 	apiUrl: string;
 	apiVersion: string;
 	apiKey?: string;
 	request: {
 		// TODO: Should be the type of balena-request
-		send: (
-			options: PinejsClientCoreFactory.AnyObject,
-		) => Promise<{ body: any }>;
+		send: (options: AnyObject) => Promise<{ body: any }>;
 	};
 	auth: import('balena-auth').default;
 }): getPine.BalenaPine {
@@ -50,6 +45,7 @@ function getPine(param: {
 	 * This subclass makes use of the [balena-request](https://github.com/balena-io-modules/balena-request) project.
 	 */
 	class BalenaPine extends PinejsClientCore<BalenaPine> {
+
 		/**
 		 * @summary Perform a network request to balena.
 		 * @method
@@ -64,8 +60,8 @@ function getPine(param: {
 			options: {
 				method: string;
 				url: string;
-				body?: PinejsClientCoreFactory.AnyObject;
-			} & PinejsClientCoreFactory.AnyObject,
+				body?: AnyObject;
+			} & AnyObject,
 		) {
 			return auth.hasKey().then(function(hasKey) {
 				const authenticated = hasKey || (apiKey != null && apiKey.length > 0);
@@ -120,15 +116,13 @@ function getPine(param: {
 declare namespace getPine {
 	// We have to declare this in a namespace to avoid an error around using private types
 	// in declaration files
-	export class BalenaPine extends PinejsClientCoreFactory.PinejsClientCore<
-		BalenaPine
-	> {
+	export class BalenaPine extends PinejsClientCore<BalenaPine> {
 		public _request(
 			options: {
 				method: string;
 				url: string;
-				body?: PinejsClientCoreFactory.AnyObject;
-			} & PinejsClientCoreFactory.AnyObject,
+				body?: AnyObject;
+			} & AnyObject,
 		): Promise<any>;
 	}
 }
