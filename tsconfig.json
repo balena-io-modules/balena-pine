@@ -11,7 +11,8 @@
 		"target": "es2015",
 		"declaration": true,
 		"skipLibCheck": true,
-		"rootDir": "lib"
+		"rootDir": "lib",
+		"importHelpers": true
 	},
 	"include": [
 		"lib/*"
