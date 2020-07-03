@@ -2,7 +2,7 @@ m = require('mochainon')
 tokens = require('./fixtures/tokens.json')
 { BalenaPine } = require('..')
 BalenaAuth = require('balena-auth')['default']
-getRequest = require('balena-request')
+{ getRequest } = require('balena-request')
 
 mockServer = require('mockttp').getLocal()
 
