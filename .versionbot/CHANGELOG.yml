@@ -1,503 +1,519 @@
 - commits:
-  - author: Tim Perry
-    body: ""
-    footers:
-      change-type: major
-      signed-off-by: Tim Perry <tim@balena.io>
-    hash: 5e5310dc13954857966dc1ff47b4ef613551d10a
-    subject: Rename everything 'resin' to 'balena'
-  - author: Tim Perry
-    body: ""
-    hash: ebbee9b3d155f0c84a4309e78ffa7b0995ba3ed7
-    subject: Switch to the new balena-config-karma
-  date: "2018-10-18T11:31:15Z"
+    - subject: Add .versionbot/CHANGELOG.yml for nested changelogs
+      hash: 9394a3215678277779fcc9de4f87a440206fa221
+      body: ''
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+      nested: []
+  version: 12.1.1
+  date: 2020-07-13T13:04:22.398Z
+- commits:
+    - author: Tim Perry
+      body: ''
+      footers:
+        change-type: major
+        signed-off-by: Tim Perry <tim@balena.io>
+      hash: 5e5310dc13954857966dc1ff47b4ef613551d10a
+      subject: Rename everything 'resin' to 'balena'
+    - author: Tim Perry
+      body: ''
+      hash: ebbee9b3d155f0c84a4309e78ffa7b0995ba3ed7
+      subject: Switch to the new balena-config-karma
+  date: '2018-10-18T11:31:15Z'
   version: 9.0.0
 - commits:
-  - author: Tim Perry
-    body: ""
-    footers:
-      change-type: minor
-      signed-off-by: Tim Perry <tim@resin.io>
-    hash: ac0cfcf7209fd914425a90f8af3df208cd1507ef
-    subject: Add an anonymous flag to allow anonymous pine requests
-  - author: Tim Perry
-    body: ""
-    footers:
-      signed-off-by: Tim Perry <tim@resin.io>
-    hash: eb365b88c75a3a329c4008ebf188f5ea0517dfc1
-    subject: Fix lint error
-  date: "2018-10-15T17:01:41Z"
+    - author: Tim Perry
+      body: ''
+      footers:
+        change-type: minor
+        signed-off-by: Tim Perry <tim@resin.io>
+      hash: ac0cfcf7209fd914425a90f8af3df208cd1507ef
+      subject: Add an anonymous flag to allow anonymous pine requests
+    - author: Tim Perry
+      body: ''
+      footers:
+        signed-off-by: Tim Perry <tim@resin.io>
+      hash: eb365b88c75a3a329c4008ebf188f5ea0517dfc1
+      subject: Fix lint error
+  date: '2018-10-15T17:01:41Z'
   version: 8.1.0
 - commits:
-  - author: Pagan Gazzard
-    body: ""
-    footers:
-      change-type: major
-      signed-off-by: Pagan Gazzard <page@resin.io>
-    hash: 4c13c2c845f332cc4b2f2b1061a504d0dee2d6f7
-    subject: Switch to pinejs-client-core ^5.3.4, dropping support for node 4
-  date: "2018-09-17T15:53:10Z"
+    - author: Pagan Gazzard
+      body: ''
+      footers:
+        change-type: major
+        signed-off-by: Pagan Gazzard <page@resin.io>
+      hash: 4c13c2c845f332cc4b2f2b1061a504d0dee2d6f7
+      subject: 'Switch to pinejs-client-core ^5.3.4, dropping support for node 4'
+  date: '2018-09-17T15:53:10Z'
   version: 8.0.0
 - commits:
-  - author: Pagan Gazzard
-    body: ""
-    footers:
-      change-type: patch
-      signed-off-by: Pagan Gazzard <page@resin.io>
-    hash: ab8513379d8dbbefef18127cda5753a9889fc749
-    subject: Add tests against node 10
-  - author: Pagan Gazzard
-    body: ""
-    footers:
-      change-type: patch
-      signed-off-by: Pagan Gazzard <page@resin.io>
-    hash: d70e99beb0f7c255b431a86516e8c3381314b196
-    subject: Update scripts for newer npm versions
-  date: "2018-09-17T12:51:59Z"
+    - author: Pagan Gazzard
+      body: ''
+      footers:
+        change-type: patch
+        signed-off-by: Pagan Gazzard <page@resin.io>
+      hash: ab8513379d8dbbefef18127cda5753a9889fc749
+      subject: Add tests against node 10
+    - author: Pagan Gazzard
+      body: ''
+      footers:
+        change-type: patch
+        signed-off-by: Pagan Gazzard <page@resin.io>
+      hash: d70e99beb0f7c255b431a86516e8c3381314b196
+      subject: Update scripts for newer npm versions
+  date: '2018-09-17T12:51:59Z'
   version: 7.0.2
 - commits:
-  - author: Tim Perry
-    body: ""
-    footers:
-      change-type: patch
-      signed-off-by: Tim Perry <tim@resin.io>
-    hash: 34050cb1c8bd8df7cbc3ae6faa86990fc944148f
-    subject: Test with Mockttp now that request._setFetch has been removed
-  - author: Tim Perry
-    body: ""
-    footers:
-      signed-off-by: Tim Perry <tim@resin.io>
-    hash: 1f2a7826ada9816de759a48309780da986af9e04
-    subject: Run tests in headless Chrome, not PhantomJS
-  - author: Thodoris Greasidis
-    body: ""
-    footers:
-      change-type: patch
-      see: https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md#running-on-alpine
-      signed-off-by: Thodoris Greasidis <thodoris@resin.io>
-    hash: 6cd9c9bf59cb0b049429c0faa041be48d24479a6
-    subject: 'chore: Add headless Chrome parameters to work on ResinCi'
-  - author: Thodoris Greasidis
-    body: ""
-    footers:
-      change-type: patch
-      signed-off-by: Thodoris Greasidis <thodoris@resin.io>
-    hash: 7b802d9e13b859ba75fe945b94d6097ba2e778ff
-    subject: 'appveyor: Use npm v5 since v6 errors on node v4'
-  date: "2018-09-14T10:19:34Z"
+    - author: Tim Perry
+      body: ''
+      footers:
+        change-type: patch
+        signed-off-by: Tim Perry <tim@resin.io>
+      hash: 34050cb1c8bd8df7cbc3ae6faa86990fc944148f
+      subject: Test with Mockttp now that request._setFetch has been removed
+    - author: Tim Perry
+      body: ''
+      footers:
+        signed-off-by: Tim Perry <tim@resin.io>
+      hash: 1f2a7826ada9816de759a48309780da986af9e04
+      subject: 'Run tests in headless Chrome, not PhantomJS'
+    - author: Thodoris Greasidis
+      body: ''
+      footers:
+        change-type: patch
+        see: >-
+          https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md#running-on-alpine
+        signed-off-by: Thodoris Greasidis <thodoris@resin.io>
+      hash: 6cd9c9bf59cb0b049429c0faa041be48d24479a6
+      subject: 'chore: Add headless Chrome parameters to work on ResinCi'
+    - author: Thodoris Greasidis
+      body: ''
+      footers:
+        change-type: patch
+        signed-off-by: Thodoris Greasidis <thodoris@resin.io>
+      hash: 7b802d9e13b859ba75fe945b94d6097ba2e778ff
+      subject: 'appveyor: Use npm v5 since v6 errors on node v4'
+  date: '2018-09-14T10:19:34Z'
   version: 7.0.1
 - commits:
-  - author: Tim Perry
-    body: ""
-    footers:
-      change-type: major
-    hash: 01275d8d41ba6af000868788ac5ed7f1190cd359
-    subject: '*BREAKING*: Upgrade pinejs-client to v4'
-  date: "2018-02-09T17:35:22Z"
+    - author: Tim Perry
+      body: ''
+      footers:
+        change-type: major
+      hash: 01275d8d41ba6af000868788ac5ed7f1190cd359
+      subject: '*BREAKING*: Upgrade pinejs-client to v4'
+  date: '2018-02-09T17:35:22Z'
   version: 7.0.0
 - commits:
-  - author: Lucian Buzzo
-    body: ""
-    footers:
-      change-type: patch
-    hash: 677a46366ab35b80b2c25b7a942e1d70c5cd73a2
-    subject: Fix 404 in Readme
-  date: "2018-01-02T12:38:17Z"
+    - author: Lucian Buzzo
+      body: ''
+      footers:
+        change-type: patch
+      hash: 677a46366ab35b80b2c25b7a942e1d70c5cd73a2
+      subject: Fix 404 in Readme
+  date: '2018-01-02T12:38:17Z'
   version: 6.0.5
 - commits:
-  - author: Tim Perry
-    body: ""
-    footers:
-      change-type: patch
-    hash: 1fb616d2e17a2ca02c0398fdd5169b23ebf1646c
-    subject: Fix deploys by removing npm caching, since it's breaking workspace restoring
-  date: "2017-11-20T18:57:46Z"
+    - author: Tim Perry
+      body: ''
+      footers:
+        change-type: patch
+      hash: 1fb616d2e17a2ca02c0398fdd5169b23ebf1646c
+      subject: >-
+        Fix deploys by removing npm caching, since it's breaking workspace
+        restoring
+  date: '2017-11-20T18:57:46Z'
   version: 6.0.4
 - commits:
-  - author: Tim Perry
-    body: ""
-    footers:
-      change-type: patch
-    hash: eb6f1801d6c856b5e76a01721a90097134ab9e7c
-    subject: Ensure autodeploy has built output available for publishing
-  date: "2017-11-03T18:47:33Z"
+    - author: Tim Perry
+      body: ''
+      footers:
+        change-type: patch
+      hash: eb6f1801d6c856b5e76a01721a90097134ab9e7c
+      subject: Ensure autodeploy has built output available for publishing
+  date: '2017-11-03T18:47:33Z'
   version: 6.0.3
 - commits:
-  - author: Tim Perry
-    body: ""
-    footers:
-      change-type: patch
-    hash: 7c6ec76af83f72fc3b7b468d8cad272b5014ebc8
-    subject: Ensure autodeploy actually triggers when a tag is pushed
-  date: "2017-11-02T19:48:15Z"
+    - author: Tim Perry
+      body: ''
+      footers:
+        change-type: patch
+      hash: 7c6ec76af83f72fc3b7b468d8cad272b5014ebc8
+      subject: Ensure autodeploy actually triggers when a tag is pushed
+  date: '2017-11-02T19:48:15Z'
   version: 6.0.2
 - commits:
-  - author: Tim Perry
-    body: ""
-    hash: 5eb7571aa8c521ac6bfaa757a6aaaa564cc535f6
-    subject: Get a single Node 6 build running on circle
-  - author: Tim Perry
-    body: ""
-    hash: 379ab601940dd69b3b8d5a46cbf21136d2d6ec4d
-    subject: Create a node 6/8/9 build matrix
-  - author: Tim Perry
-    body: ""
-    hash: 86b34ac55c667dc25208a4e574094a712e103655
-    subject: Don't test Node 9, since Circle doesn't support it yet
-  - author: Tim Perry
-    body: ""
-    hash: 3201a998ee0139f51e6a8cbff7f944e2bfa789e7
-    subject: Refactor out duplicated build steps
-  - author: Tim Perry
-    body: ""
-    footers:
-      change-type: patch
-    hash: 841faed330975eb85ddf6ec90c5c5bbaac3b2f00
-    subject: Autodeploy successful tagged builds to npm
-  - author: Tim Perry
-    body: ""
-    hash: 2324d5c7e33c4e45fdbb3691b91dc88a09e17d67
-    subject: Remove travis, since we're now using circle instead
-  - author: Tim Perry
-    body: ""
-    hash: 2534a040e173d3f382358c2d737b8e42be483cdc
-    subject: Update readme to show a circle badge, not travis
-  date: "2017-11-02T19:01:17Z"
+    - author: Tim Perry
+      body: ''
+      hash: 5eb7571aa8c521ac6bfaa757a6aaaa564cc535f6
+      subject: Get a single Node 6 build running on circle
+    - author: Tim Perry
+      body: ''
+      hash: 379ab601940dd69b3b8d5a46cbf21136d2d6ec4d
+      subject: Create a node 6/8/9 build matrix
+    - author: Tim Perry
+      body: ''
+      hash: 86b34ac55c667dc25208a4e574094a712e103655
+      subject: 'Don''t test Node 9, since Circle doesn''t support it yet'
+    - author: Tim Perry
+      body: ''
+      hash: 3201a998ee0139f51e6a8cbff7f944e2bfa789e7
+      subject: Refactor out duplicated build steps
+    - author: Tim Perry
+      body: ''
+      footers:
+        change-type: patch
+      hash: 841faed330975eb85ddf6ec90c5c5bbaac3b2f00
+      subject: Autodeploy successful tagged builds to npm
+    - author: Tim Perry
+      body: ''
+      hash: 2324d5c7e33c4e45fdbb3691b91dc88a09e17d67
+      subject: 'Remove travis, since we''re now using circle instead'
+    - author: Tim Perry
+      body: ''
+      hash: 2534a040e173d3f382358c2d737b8e42be483cdc
+      subject: 'Update readme to show a circle badge, not travis'
+  date: '2017-11-02T19:01:17Z'
   version: 6.0.1
 - commits:
-  - author: MoranF
-    body: 'Connects-To: #33'
-    footers:
-      change-type: major
-    hash: 8a1151571e9fd603804eb62af98c535462b0a4cd
-    subject: Use resin-auth instead of resin-token and resin-request version 9.0.0
-  date: "2017-11-01T14:50:37Z"
+    - author: MoranF
+      body: 'Connects-To: #33'
+      footers:
+        change-type: major
+      hash: 8a1151571e9fd603804eb62af98c535462b0a4cd
+      subject: Use resin-auth instead of resin-token and resin-request version 9.0.0
+  date: '2017-11-01T14:50:37Z'
   version: 6.0.0
 - commits:
-  - author: Tim Perry
-    body: ""
-    footers:
-      change-type: patch
-    hash: 7f62922e01bb98b05624481b3c4e36a6ae5da2cc
-    subject: Reformat changelog to add versionbot
-  - author: MoranF
-    body: 'Connects-To: #31'
-    footers:
-      change-type: patch
-    hash: 19fee524c437a58e18f14daeb6d52565e6341a5f
-    subject: Fix tests to work with resin-request version 8.6.0
-  date: "2017-11-01T13:00:54Z"
+    - author: Tim Perry
+      body: ''
+      footers:
+        change-type: patch
+      hash: 7f62922e01bb98b05624481b3c4e36a6ae5da2cc
+      subject: Reformat changelog to add versionbot
+    - author: MoranF
+      body: 'Connects-To: #31'
+      footers:
+        change-type: patch
+      hash: 19fee524c437a58e18f14daeb6d52565e6341a5f
+      subject: Fix tests to work with resin-request version 8.6.0
+  date: '2017-11-01T13:00:54Z'
   version: 5.0.4
 - commits:
-  - author: Tim Perry
-    body: ""
-    hash: 7a1606b1a15d04d32aeff766fd74cf6ce5007668
-    subject: Update pinejs client
-  date: "2017-03-22T11:07:17Z"
+    - author: Tim Perry
+      body: ''
+      hash: 7a1606b1a15d04d32aeff766fd74cf6ce5007668
+      subject: Update pinejs client
+  date: '2017-03-22T11:07:17Z'
   version: 5.0.2
 - commits:
-  - author: Eugene Mirotin
-    body: ""
-    hash: 21fa70e7ebfe4452a007937e1cc5102af54cac3d
-    subject: make use of resin-fetch-mock
-  date: "2017-01-06T15:05:08Z"
+    - author: Eugene Mirotin
+      body: ''
+      hash: 21fa70e7ebfe4452a007937e1cc5102af54cac3d
+      subject: make use of resin-fetch-mock
+  date: '2017-01-06T15:05:08Z'
   version: 5.0.1
 - commits:
-  - author: Tim Perry
-    body: ""
-    hash: ebf7e9ad1f72c8db6be20f55f457f2ef0f2996d7
-    subject: Move to a DI approach for resin-request and resin-token
-  - author: Tim Perry
-    body: ""
-    hash: 78832138ace023d3e1305badf2b304ee13cd60be
-    subject: Make request and token setup in tests consistent
-  - author: Tim Perry
-    body: ""
-    hash: 8eea067442efd919c0ba39ae593920968772b510
-    subject: Remove unused resin-settings-client dep, now that we use a temp dir in
-      the tests
-  - author: Tim Perry
-    body: ""
-    hash: e22b8a95c1db68c8612927a017bf0cd5b0887472
-    subject: Upgrade to new resin-request version
-  - author: Tim Perry
-    body: ""
-    hash: b2f24d232e5f0f835eb76a37d81600661d7e7caa
-    subject: Upgrade pinejs-client
-  - author: Tim Perry
-    body: ""
-    hash: a2f66bf177c54fe033e86a50c15a093cbe3e85e3
-    subject: Include 'generated by' headers in build to hide them from diffs
-  - author: Tim Perry
-    body: ""
-    hash: d43a7b5677e3fd470809de1f7f30c8dc24e92bc7
-    subject: Upgrade to new resin-request
-  - author: Tim Perry
-    body: ""
-    hash: a625cbdd1e74d0e4acc0ec197219eb98d4639ab7
-    subject: Move to new fetch-mock matching format
-  date: "2017-01-04T15:49:15Z"
+    - author: Tim Perry
+      body: ''
+      hash: ebf7e9ad1f72c8db6be20f55f457f2ef0f2996d7
+      subject: Move to a DI approach for resin-request and resin-token
+    - author: Tim Perry
+      body: ''
+      hash: 78832138ace023d3e1305badf2b304ee13cd60be
+      subject: Make request and token setup in tests consistent
+    - author: Tim Perry
+      body: ''
+      hash: 8eea067442efd919c0ba39ae593920968772b510
+      subject: >-
+        Remove unused resin-settings-client dep, now that we use a temp dir in
+        the tests
+    - author: Tim Perry
+      body: ''
+      hash: e22b8a95c1db68c8612927a017bf0cd5b0887472
+      subject: Upgrade to new resin-request version
+    - author: Tim Perry
+      body: ''
+      hash: b2f24d232e5f0f835eb76a37d81600661d7e7caa
+      subject: Upgrade pinejs-client
+    - author: Tim Perry
+      body: ''
+      hash: a2f66bf177c54fe033e86a50c15a093cbe3e85e3
+      subject: Include 'generated by' headers in build to hide them from diffs
+    - author: Tim Perry
+      body: ''
+      hash: d43a7b5677e3fd470809de1f7f30c8dc24e92bc7
+      subject: Upgrade to new resin-request
+    - author: Tim Perry
+      body: ''
+      hash: a625cbdd1e74d0e4acc0ec197219eb98d4639ab7
+      subject: Move to new fetch-mock matching format
+  date: '2017-01-04T15:49:15Z'
   version: 5.0.0
 - commits:
-  - author: Eugene Mirotin
-    body: |-
-      standardize package.json
-      work properly with the new resin-request
-      update dev dependencies
-      add browser tests
-      replace nock with fetch-mock
-      use granular lodash imports
-      use recent api version
-      update test versions
-    hash: 1854a62b10801830fe0e05f396ce194c72a83297
-    subject: Switch to factory pattern
-  - author: Kostas Lekkas
-    body: ""
-    hash: b967707dad52218cf025d0eb7cd24ec8be4618f0
-    subject: Update README.md
-  date: "2016-11-24T13:23:00Z"
+    - author: Eugene Mirotin
+      body: |-
+        standardize package.json
+        work properly with the new resin-request
+        update dev dependencies
+        add browser tests
+        replace nock with fetch-mock
+        use granular lodash imports
+        use recent api version
+        update test versions
+      hash: 1854a62b10801830fe0e05f396ce194c72a83297
+      subject: Switch to factory pattern
+    - author: Kostas Lekkas
+      body: ''
+      hash: b967707dad52218cf025d0eb7cd24ec8be4618f0
+      subject: Update README.md
+  date: '2016-11-24T13:23:00Z'
   version: 4.0.0
 - commits:
-  - author: Pagan Gazzard
-    body: ""
-    footers:
-      change-type: minor
-    hash: bd8b1070a59c5ee99b861daeb47dc61c327a11ef
-    subject: Update balena-auth to 4.x and balena-request to 11.x
-  date: "2020-07-06T10:27:12Z"
+    - author: Pagan Gazzard
+      body: ''
+      footers:
+        change-type: minor
+      hash: bd8b1070a59c5ee99b861daeb47dc61c327a11ef
+      subject: Update balena-auth to 4.x and balena-request to 11.x
+  date: '2020-07-06T10:27:12Z'
   version: 12.1.0
 - commits:
-  - author: Pagan Gazzard
-    body: ""
-    footers:
-      change-type: patch
-    hash: 4723949cdd1999cefcd35cab2163b3a0ce3b7135
-    subject: Use typescript import helpers
-  date: "2020-07-03T18:44:27Z"
+    - author: Pagan Gazzard
+      body: ''
+      footers:
+        change-type: patch
+      hash: 4723949cdd1999cefcd35cab2163b3a0ce3b7135
+      subject: Use typescript import helpers
+  date: '2020-07-03T18:44:27Z'
   version: 12.0.1
 - commits:
-  - author: Thodoris Greasidis
-    body: ""
-    footers:
-      change-type: major
-      signed-off-by: Thodoris Greasidis <thodoris@balena.io>
-    hash: 1ba597dfd1d59a00b8c97ee3c5e53f33a20ed0d6
-    subject: Stop actively supporting node 8
-  - author: Thodoris Greasidis
-    body: ""
-    footers:
-      change-type: patch
-      signed-off-by: Thodoris Greasidis <thodoris@balena.io>
-    hash: 76758e6a1e6f3663fc93e3805e30887b8cf35704
-    subject: Convert to async await
-  - author: Thodoris Greasidis
-    body: ""
-    footers:
-      change-type: minor
-      signed-off-by: Thodoris Greasidis <thodoris@balena.io>
-    hash: b7d70d9a5818dad1e5ee2671f6ba7ce3b6b88f86
-    subject: Add balenaCI repo.yml
-  - author: Thodoris Greasidis
-    body: ""
-    footers:
-      signed-off-by: Thodoris Greasidis <thodoris@balena.io>
-    hash: 3b5a18e6165a5968f222a01af85453eea3e132a9
-    subject: 'karma.conf.js: Combine declaration & assignment of karmaConfig'
-  - author: Thodoris Greasidis
-    body: ""
-    footers:
-      change-type: patch
-      signed-off-by: Thodoris Greasidis <thodoris@balena.io>
-    hash: 3841722fe089f0754ea3d4c372ec9f43cc870895
-    subject: Bump @balena/lint to v5
-  - author: Thodoris Greasidis
-    body: ""
-    footers:
-      change-type: major
-      signed-off-by: Thodoris Greasidis <thodoris@balena.io>
-    hash: 1e6cfddc1de158cd3f16b9051cec8496f6b36f8a
-    subject: Drop getPine() in favor of an es6 export of the BalenaPine class
-  - author: Thodoris Greasidis
-    body: ""
-    footers:
-      change-type: major
-      signed-off-by: Thodoris Greasidis <thodoris@balena.io>
-    hash: c44a5df37aa6442bd5bb1a37d976196dfaba6b4a
-    subject: Drop the API_PREFIX property in favor of the apiPrefix
-  - author: Thodoris Greasidis
-    body: Update pinejs-client-core from 5.8.0 to 6.0.1
-    footers:
-      change-type: major
-      signed-off-by: Thodoris Greasidis <thodoris@balena.io>
-    hash: 979466bb4908dd4d3f22737ac13de79ac0e30899
-    subject: Bump to pinejs-client v6 which requires es2015 & drops Bluebird promises
-  date: "2020-06-26T15:23:48Z"
+    - author: Thodoris Greasidis
+      body: ''
+      footers:
+        change-type: major
+        signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+      hash: 1ba597dfd1d59a00b8c97ee3c5e53f33a20ed0d6
+      subject: Stop actively supporting node 8
+    - author: Thodoris Greasidis
+      body: ''
+      footers:
+        change-type: patch
+        signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+      hash: 76758e6a1e6f3663fc93e3805e30887b8cf35704
+      subject: Convert to async await
+    - author: Thodoris Greasidis
+      body: ''
+      footers:
+        change-type: minor
+        signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+      hash: b7d70d9a5818dad1e5ee2671f6ba7ce3b6b88f86
+      subject: Add balenaCI repo.yml
+    - author: Thodoris Greasidis
+      body: ''
+      footers:
+        signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+      hash: 3b5a18e6165a5968f222a01af85453eea3e132a9
+      subject: 'karma.conf.js: Combine declaration & assignment of karmaConfig'
+    - author: Thodoris Greasidis
+      body: ''
+      footers:
+        change-type: patch
+        signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+      hash: 3841722fe089f0754ea3d4c372ec9f43cc870895
+      subject: Bump @balena/lint to v5
+    - author: Thodoris Greasidis
+      body: ''
+      footers:
+        change-type: major
+        signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+      hash: 1e6cfddc1de158cd3f16b9051cec8496f6b36f8a
+      subject: Drop getPine() in favor of an es6 export of the BalenaPine class
+    - author: Thodoris Greasidis
+      body: ''
+      footers:
+        change-type: major
+        signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+      hash: c44a5df37aa6442bd5bb1a37d976196dfaba6b4a
+      subject: Drop the API_PREFIX property in favor of the apiPrefix
+    - author: Thodoris Greasidis
+      body: Update pinejs-client-core from 5.8.0 to 6.0.1
+      footers:
+        change-type: major
+        signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+      hash: 979466bb4908dd4d3f22737ac13de79ac0e30899
+      subject: Bump to pinejs-client v6 which requires es2015 & drops Bluebird promises
+  date: '2020-06-26T15:23:48Z'
   version: 12.0.0
 - commits:
-  - author: Thodoris Greasidis
-    body: ""
-    footers:
-      change-type: patch
-      signed-off-by: Thodoris Greasidis <thodoris@balena.io>
-    hash: 3f68368659c8424995daa2d2223152a8779ee0c3
-    subject: Convert karma.conf to js
-  - author: Thodoris Greasidis
-    body: ""
-    footers:
-      change-type: patch
-      signed-off-by: Thodoris Greasidis <thodoris@balena.io>
-    hash: 02eda53ee6fad3b2409604f483e12a54490f0f77
-    subject: Bump balena-config-karma to v3
-  date: "2020-06-15T13:15:02Z"
+    - author: Thodoris Greasidis
+      body: ''
+      footers:
+        change-type: patch
+        signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+      hash: 3f68368659c8424995daa2d2223152a8779ee0c3
+      subject: Convert karma.conf to js
+    - author: Thodoris Greasidis
+      body: ''
+      footers:
+        change-type: patch
+        signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+      hash: 02eda53ee6fad3b2409604f483e12a54490f0f77
+      subject: Bump balena-config-karma to v3
+  date: '2020-06-15T13:15:02Z'
   version: 11.2.1
 - commits:
-  - author: Pagan Gazzard
-    body: ""
-    footers:
-      change-type: minor
-    hash: 8ceb88cd3e290d78aa6c26422563d188dcb4e6b8
-    subject: Generate optional builds for es2015/es2018 as well as the default es5
-  date: "2020-06-02T11:43:19Z"
+    - author: Pagan Gazzard
+      body: ''
+      footers:
+        change-type: minor
+      hash: 8ceb88cd3e290d78aa6c26422563d188dcb4e6b8
+      subject: Generate optional builds for es2015/es2018 as well as the default es5
+  date: '2020-06-02T11:43:19Z'
   version: 11.2.0
 - commits:
-  - author: Pagan Gazzard
-    body: ""
-    footers:
-      change-type: minor
-    hash: 2c84ecc44e13dac77910def2e811ce26ccaaa857
-    subject: Convert to typescript and expose types
-  date: "2020-06-02T11:26:29Z"
+    - author: Pagan Gazzard
+      body: ''
+      footers:
+        change-type: minor
+      hash: 2c84ecc44e13dac77910def2e811ce26ccaaa857
+      subject: Convert to typescript and expose types
+  date: '2020-06-02T11:26:29Z'
   version: 11.1.0
 - commits:
-  - author: Pagan Gazzard
-    body: ""
-    footers:
-      change-type: patch
-    hash: 9c3994e8d2357734500ad5b8dfa089a49298af32
-    subject: Switch to @balena/lint for linting
-  - author: Pagan Gazzard
-    body: ""
-    footers:
-      change-type: patch
-    hash: 937ef5746f6c34fdb39a0eae55d0bc0f47d883a9
-    subject: Run build and tests directly
-  - author: Pagan Gazzard
-    body: ""
-    hash: 53ca03cd01ab3afdabc4b6538c577e73ee55cbb6
-    subject: 'CI: Drop node 6 tests in favor of node 14'
-  date: "2020-06-01T14:11:44Z"
+    - author: Pagan Gazzard
+      body: ''
+      footers:
+        change-type: patch
+      hash: 9c3994e8d2357734500ad5b8dfa089a49298af32
+      subject: Switch to @balena/lint for linting
+    - author: Pagan Gazzard
+      body: ''
+      footers:
+        change-type: patch
+      hash: 937ef5746f6c34fdb39a0eae55d0bc0f47d883a9
+      subject: Run build and tests directly
+    - author: Pagan Gazzard
+      body: ''
+      hash: 53ca03cd01ab3afdabc4b6538c577e73ee55cbb6
+      subject: 'CI: Drop node 6 tests in favor of node 14'
+  date: '2020-06-01T14:11:44Z'
   version: 11.0.2
 - commits:
-  - author: Pagan Gazzard
-    body: ""
-    footers:
-      change-type: patch
-    hash: 3786e2f9855aa09b3c71abcb3ebda2d12c556d81
-    subject: Remove lodash dependency
-  date: "2020-04-20T15:05:07Z"
+    - author: Pagan Gazzard
+      body: ''
+      footers:
+        change-type: patch
+      hash: 3786e2f9855aa09b3c71abcb3ebda2d12c556d81
+      subject: Remove lodash dependency
+  date: '2020-04-20T15:05:07Z'
   version: 11.0.1
 - commits:
-  - author: Thodoris Greasidis
-    body: ""
-    footers:
-      change-type: major
-      signed-off-by: Thodoris Greasidis <thodoris@balena.io>
-    hash: 19b3e9b48445fccb1a1298beec3cc9617e35d27b
-    subject: Allow unauthenticated pine calls
-  date: "2020-04-10T17:37:59Z"
+    - author: Thodoris Greasidis
+      body: ''
+      footers:
+        change-type: major
+        signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+      hash: 19b3e9b48445fccb1a1298beec3cc9617e35d27b
+      subject: Allow unauthenticated pine calls
+  date: '2020-04-10T17:37:59Z'
   version: 11.0.0
 - commits:
-  - author: Thodoris Greasidis
-    body: ""
-    footers:
-      signed-off-by: Thodoris Greasidis <thodoris@balena.io>
-    hash: da68299fd7f1891a112bbb07339a51210710f0db
-    subject: Abstract the private resource mocking in a single place
-  - author: Thodoris Greasidis
-    body: ""
-    footers:
-      change-type: patch
-      signed-off-by: Thodoris Greasidis <thodoris@balena.io>
-    hash: f590556d992ce3a4aabe632e0b5a33895b713768
-    subject: Add tests for public resources
-  date: "2020-04-10T17:01:32Z"
+    - author: Thodoris Greasidis
+      body: ''
+      footers:
+        signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+      hash: da68299fd7f1891a112bbb07339a51210710f0db
+      subject: Abstract the private resource mocking in a single place
+    - author: Thodoris Greasidis
+      body: ''
+      footers:
+        change-type: patch
+        signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+      hash: f590556d992ce3a4aabe632e0b5a33895b713768
+      subject: Add tests for public resources
+  date: '2020-04-10T17:01:32Z'
   version: 10.1.3
 - commits:
-  - author: Thodoris Greasidis
-    body: ""
-    footers:
-      change-type: patch
-      signed-off-by: Thodoris Greasidis <thodoris@balena.io>
-    hash: c0e5bd1b00ec046a48bea7ac18aecdc43d85651e
-    subject: Run build before tests
-  - author: Thodoris Greasidis
-    body: ""
-    footers:
-      change-type: patch
-      signed-off-by: Thodoris Greasidis <thodoris@balena.io>
-    hash: 5efa8c6b45077bcee71b845cd582c5b459e86cd4
-    subject: Use a prepack step to be balenaCI compliant
-  - author: Thodoris Greasidis
-    body: ""
-    footers:
-      change-type: patch
-      signed-off-by: Thodoris Greasidis <thodoris@balena.io>
-    hash: d535ee8657f274b65d493aaae198c3722183bcfb
-    subject: Exclude the build output from the repo
-  - author: Thodoris Greasidis
-    body: ""
-    footers:
-      change-type: patch
-      see: https://github.com/balena-io-modules/pinejs-client-js/commit/d6c9a485e0da5f6aa600597b6d076a8dce411df7
-      signed-off-by: Thodoris Greasidis <thodoris@balena.io>
-    hash: c04e09782439757599869cdd1bdc6a25a7abd28e
-    subject: 'CircleCI: Remove deploy job as it''s handled by balenaCI'
-  date: "2020-04-10T16:44:58Z"
+    - author: Thodoris Greasidis
+      body: ''
+      footers:
+        change-type: patch
+        signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+      hash: c0e5bd1b00ec046a48bea7ac18aecdc43d85651e
+      subject: Run build before tests
+    - author: Thodoris Greasidis
+      body: ''
+      footers:
+        change-type: patch
+        signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+      hash: 5efa8c6b45077bcee71b845cd582c5b459e86cd4
+      subject: Use a prepack step to be balenaCI compliant
+    - author: Thodoris Greasidis
+      body: ''
+      footers:
+        change-type: patch
+        signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+      hash: d535ee8657f274b65d493aaae198c3722183bcfb
+      subject: Exclude the build output from the repo
+    - author: Thodoris Greasidis
+      body: ''
+      footers:
+        change-type: patch
+        see: >-
+          https://github.com/balena-io-modules/pinejs-client-js/commit/d6c9a485e0da5f6aa600597b6d076a8dce411df7
+        signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+      hash: c04e09782439757599869cdd1bdc6a25a7abd28e
+      subject: 'CircleCI: Remove deploy job as it''s handled by balenaCI'
+  date: '2020-04-10T16:44:58Z'
   version: 10.1.2
 - commits:
-  - author: Pagan Gazzard
-    body: ""
-    footers:
-      change-type: patch
-    hash: 6074237ce338293356e758c5f75c2af969df4e7c
-    subject: Update dependencies
-  - author: Pagan Gazzard
-    body: ""
-    hash: a2ac10babcefbb973e1b2583fded65e6dbbbd68a
-    subject: Update gulp
-  - author: Pagan Gazzard
-    body: ""
-    hash: 6ac9380d3b45aaae738329f1a67af31ef06eb2ca
-    subject: Add node 12 to the test matrix
-  date: "2020-01-21T16:59:03Z"
+    - author: Pagan Gazzard
+      body: ''
+      footers:
+        change-type: patch
+      hash: 6074237ce338293356e758c5f75c2af969df4e7c
+      subject: Update dependencies
+    - author: Pagan Gazzard
+      body: ''
+      hash: a2ac10babcefbb973e1b2583fded65e6dbbbd68a
+      subject: Update gulp
+    - author: Pagan Gazzard
+      body: ''
+      hash: 6ac9380d3b45aaae738329f1a67af31ef06eb2ca
+      subject: Add node 12 to the test matrix
+  date: '2020-01-21T16:59:03Z'
   version: 10.1.1
 - commits:
-  - author: Thodoris Greasidis
-    body: ""
-    footers:
-      change-type: minor
-      depends-on: https://github.com/balena-io/pinejs-client-js/pull/81
-      signed-off-by: Thodoris Greasidis <thodoris@balena.io>
-    hash: 79f8c98e630cd57c0d6c4bba9cff78dd19c97a28
-    subject: Bump pinejs client to add the 'upsert' method, requires Pinejs ^10.19.1
-  date: "2019-08-02T18:12:40Z"
+    - author: Thodoris Greasidis
+      body: ''
+      footers:
+        change-type: minor
+        depends-on: 'https://github.com/balena-io/pinejs-client-js/pull/81'
+        signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+      hash: 79f8c98e630cd57c0d6c4bba9cff78dd19c97a28
+      subject: 'Bump pinejs client to add the ''upsert'' method, requires Pinejs ^10.19.1'
+  date: '2019-08-02T18:12:40Z'
   version: 10.1.0
 - commits:
-  - author: Thodoris Greasidis
-    body: ""
-    footers:
-      change-type: patch
-    hash: 72842ba04576b73e33d2d8761441e6e7cc5f0b5c
-    subject: 'README: Fix appveyor build status badge'
-  date: "2019-07-17T10:26:16Z"
+    - author: Thodoris Greasidis
+      body: ''
+      footers:
+        change-type: patch
+      hash: 72842ba04576b73e33d2d8761441e6e7cc5f0b5c
+      subject: 'README: Fix appveyor build status badge'
+  date: '2019-07-17T10:26:16Z'
   version: 10.0.1
 - commits:
-  - author: Stevche Radevski
-    body: Due to balena-errors, it drops support for Node 6.x
-    footers:
-      change-type: major
-      signed-off-by: Stevche Radevski <stevche@balena.io>
-    hash: 389885cc429b2838e8a819997d996a56ce51e65f
-    subject: Bump balena errors and pine client version
-  date: "2019-07-17T07:38:01Z"
+    - author: Stevche Radevski
+      body: 'Due to balena-errors, it drops support for Node 6.x'
+      footers:
+        change-type: major
+        signed-off-by: Stevche Radevski <stevche@balena.io>
+      hash: 389885cc429b2838e8a819997d996a56ce51e65f
+      subject: Bump balena errors and pine client version
+  date: '2019-07-17T07:38:01Z'
   version: 10.0.0

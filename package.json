@@ -1,6 +1,6 @@
 {
   "name": "balena-pine",
-  "version": "12.1.0",
+  "version": "12.1.1",
   "description": "Balena PineJS client.",
   "main": "index.js",
   "types": "index.d.ts",
