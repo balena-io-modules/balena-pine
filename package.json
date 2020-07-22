@@ -37,9 +37,9 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "@balena/lint": "^5.0.0",
-    "balena-auth": "^4.0.0",
+    "balena-auth": "^4.0.2",
     "balena-config-karma": "^3.0.0",
-    "balena-request": "^11.0.1",
+    "balena-request": "^11.1.0",
     "coffeescript": "^1.12.7",
     "karma": "^3.1.4",
     "karma-chrome-launcher": "^2.2.0",
@@ -47,12 +47,12 @@
     "mochainon": "^2.0.0",
     "mockttp": "^0.9.1",
     "temp": "^0.8.4",
-    "typescript": "^3.9.6"
+    "typescript": "^3.9.7"
   },
   "dependencies": {
     "@balena/es-version": "^1.0.0",
     "balena-errors": "^4.2.1",
-    "pinejs-client-core": "^6.0.1",
+    "pinejs-client-core": "^6.1.0",
     "tslib": "^2.0.0"
   },
   "peerDependencies": {
