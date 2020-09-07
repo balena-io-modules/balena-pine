@@ -52,7 +52,7 @@
   "dependencies": {
     "@balena/es-version": "^1.0.0",
     "balena-errors": "^4.2.1",
-    "pinejs-client-core": "^6.6.1",
+    "pinejs-client-core": "^6.9.0",
     "tslib": "^2.0.1"
   },
   "peerDependencies": {
