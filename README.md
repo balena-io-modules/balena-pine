@@ -1,5 +1,5 @@
 balena-pine
-----------
+-----------
 
 [![npm version](https://badge.fury.io/js/balena-pine.svg)](http://badge.fury.io/js/balena-pine)
 [![dependencies](https://david-dm.org/balena-io-modules/balena-pine.png)](https://david-dm.org/balena-io-modules/balena-pine.png)
