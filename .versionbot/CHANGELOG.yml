@@ -1,4 +1,16 @@
 - commits:
+    - subject: 'README: Align the dashes in the title'
+      hash: 7b0b573ce94e86e97ae07aad117f396a4545884e
+      body: |
+        Just a test to confirm whether the balenaCI browser tests work.
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Thodoris Greasidis
+      nested: []
+  version: 12.4.1
+  date: 2020-09-09T23:08:49.620Z
+- commits:
     - subject: Update pinejs-client-core to 6.9.0 to support getOrCreate()
       hash: 31a52ba29ee77b5e6b0eea14d8dcaa9aa3a5fb9f
       body: |
